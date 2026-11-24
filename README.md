@@ -12,14 +12,15 @@ Tyranor-Next-ShiinaRio/
 │   ├── patches/                  # 上游补丁队列（series 与 .patch 文件；当前为空队列）
 │   └── host-apk/                 # .NET 10 Android 外置宿主工程与 xUnit 契约单元测试
 ├── tools/openshiina/             # 校验、补丁、目录生成、上游同步、Manifest 检查与 APK 构建脚本
-├── .github/workflows/            # 工具自检、定时上游同步 PR 与 Release APK 构建
+├── .github/workflows/            # 工具自检、按需上游同步与发版自动同步构建
 ├── LICENSE / NOTICE.md           # GPL-3.0 开源许可与第三方组件声明
 └── AGENTS.md                     # AI / 协作者开发与验证规范
 ```
 
-## 上游锁定与补丁机制
+## 上游同步与发版机制
 
-- 当前锁定上游：`kagaminehaku/OpenShiina` 提交 [`14a24de703fb`](https://github.com/kagaminehaku/OpenShiina/tree/14a24de703fb77c743ea6e0328f8e69fa26f3127)（标签 `v0.8.7`，协议 `GPL-3.0-or-later`）。
+- **每次发版自动同步上游**：推送 `v*` 标签或通过 `Build OpenShiina Host APK` 工作流传入 `release_tag` 触发发版时，会自动调用 [`tools/openshiina/sync-upstream.py`](tools/openshiina/sync-upstream.py) 拉取 `kagaminehaku/OpenShiina` 最新提交（或指定 `target_commit`）、重放补丁队列、刷新 `engine/openshiina/games.json` 并更新 [`engine/openshiina/source-lock.json`](engine/openshiina/source-lock.json) 的提交与版本号，在通过全量测试与 APK 签名/清单校验后回写 `main` 并发布 Release。
+- 当前锁定基准：`kagaminehaku/OpenShiina` 提交 [`14a24de703fb`](https://github.com/kagaminehaku/OpenShiina/tree/14a24de703fb77c743ea6e0328f8e69fa26f3127)（标签 `v0.8.7`，协议 `GPL-3.0-or-later`）。
 - 本仓库**不拷贝上游源码**。宿主层直接通过公开 API 对接 `OpenShiina.App` / `OpenShiina.Core` / `OpenShiina.Gpu`；若后续确需微调上游行为，必须通过 `tools/openshiina/export-patches.py` 导出为 [`engine/openshiina/patches/`](engine/openshiina/patches/README.md) 补丁。
 
 ## 与 Tyranor-Next 的启动契约

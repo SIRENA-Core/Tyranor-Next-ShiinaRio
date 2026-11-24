@@ -100,6 +100,7 @@ class SyncUpstreamTests(unittest.TestCase):
                         "license": "GPL-3.0-or-later",
                     },
                     "patches": {"dir": "patches", "seriesFile": "patches/series", "series": []},
+                    "host": {"versionCode": 1, "versionName": "0.1.0"},
                     "catalog": {"sourcePath": "src/OpenShiina.Core/Data/Formats.Json"},
                 },
                 lock_path,
@@ -126,6 +127,86 @@ class SyncUpstreamTests(unittest.TestCase):
             saved_catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
             self.assertEqual(saved_catalog["formatsVersion"], 150)
             self.assertIn("tsukutori.exe", saved_catalog["gameMap"])
+
+    def test_syncs_release_tag_updates_version_name_and_code(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            remote = root / "remote"
+            remote.mkdir()
+            _git(remote, "init", "-b", "master")
+            _git(remote, "config", "user.email", "test@example.com")
+            _git(remote, "config", "user.name", "Test User")
+            formats = remote / "src" / "OpenShiina.Core" / "Data" / "Formats.Json"
+            formats.parent.mkdir(parents=True)
+            formats.write_text(
+                json.dumps(
+                    {
+                        "Version": 149,
+                        "SchemeMap": {
+                            "WAR": {"KnownSchemes": [{"Name": "Aneiro", "Version": 2490}]}
+                        },
+                        "GameMap": {"ANEIRO.exe": "Aneiro"},
+                    }
+                ),
+                encoding="utf-8",
+            )
+            _git(remote, "add", ".")
+            _git(remote, "commit", "-m", "v0.8.7")
+            _git(remote, "tag", "v0.8.7")
+            sha = _git(remote, "rev-parse", "HEAD")
+
+            patches_dir = root / "patches"
+            series_file = patches_dir / "series"
+            save_series_file([], series_file)
+            lock_path = root / "source-lock.json"
+            save_lock(
+                {
+                    "schemaVersion": 1,
+                    "engine": "openshiina",
+                    "upstream": {
+                        "repo": str(remote),
+                        "branch": "master",
+                        "commit": sha,
+                        "tag": "v0.8.7",
+                        "license": "GPL-3.0-or-later",
+                    },
+                    "patches": {"dir": "patches", "seriesFile": "patches/series", "series": []},
+                    "host": {"versionCode": 1, "versionName": "0.1.0"},
+                    "catalog": {"sourcePath": "src/OpenShiina.Core/Data/Formats.Json"},
+                },
+                lock_path,
+            )
+            catalog_path = root / "games.json"
+            checkout = root / "checkout"
+
+            same_ver = sync_mod.sync_upstream(
+                checkout,
+                lock_path=lock_path,
+                patches_dir=patches_dir,
+                series_file=series_file,
+                catalog_path=catalog_path,
+                release_tag="v0.1.0",
+            )
+            self.assertFalse(same_ver["versionChanged"])
+            self.assertEqual(same_ver["versionCode"], 1)
+            self.assertEqual(same_ver["versionName"], "0.1.0")
+
+            bumped = sync_mod.sync_upstream(
+                checkout,
+                lock_path=lock_path,
+                patches_dir=patches_dir,
+                series_file=series_file,
+                catalog_path=catalog_path,
+                release_tag="v0.2.0",
+            )
+            self.assertTrue(bumped["versionChanged"])
+            self.assertTrue(bumped["changed"])
+            self.assertEqual(bumped["versionCode"], 2)
+            self.assertEqual(bumped["versionName"], "0.2.0")
+
+            saved_lock = json.loads(lock_path.read_text(encoding="utf-8"))
+            self.assertEqual(saved_lock["host"]["versionCode"], 2)
+            self.assertEqual(saved_lock["host"]["versionName"], "0.2.0")
 
 
 if __name__ == "__main__":

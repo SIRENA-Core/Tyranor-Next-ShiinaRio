@@ -6,8 +6,18 @@ on:
       - "v*"
   workflow_dispatch:
     inputs:
+      release_tag:
+        description: "发布标签（如 v0.1.1；填写后自动同步上游、回写 main 并正式发布 Release，留空仅做构建校验）"
+        required: false
+        default: ""
+        type: string
+      target_commit:
+        description: "可选：指定同步的 OpenShiina 提交或标签（留空默认同步上游 master 最新提交）"
+        required: false
+        default: ""
+        type: string
       use_dev_signing:
-        description: "使用临时调试密钥签名（仅测试构建）"
+        description: "无正式签名证书时使用临时调试密钥（仅在未填 release_tag 的测试构建生效）"
         required: false
         default: "true"
         type: string
@@ -21,6 +31,8 @@ jobs:
     steps:
       - name: 检出宿主仓库
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 安装 JDK 17、Python 与 .NET 10 SDK
         uses: actions/setup-java@v4
@@ -34,26 +46,57 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
-      - name: 安装 Android 工作负载与构建工具
+      - name: 同步 OpenShiina 上游更新并刷新目录与版本号
+        id: sync
         run: |
-          dotnet workload install android
-          yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
-          yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0" || true
+          IS_RELEASE="false"
+          RELEASE_TAG=""
+          if [ "${{ github.event_name }}" = "push" ] && [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            IS_RELEASE="true"
+            RELEASE_TAG="${{ github.ref_name }}"
+          elif [ -n "${{ inputs.release_tag }}" ]; then
+            RELEASE_TAG="${{ inputs.release_tag }}"
+            if ! printf '%s' "$RELEASE_TAG" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$'; then
+              echo "非法的发布标签：$RELEASE_TAG（期望形如 v0.1.0 或 v0.1.1-rc1）" >&2
+              exit 1
+            fi
+            IS_RELEASE="true"
+          fi
 
-      - name: 运行全部工具与契约单测
+          ARGS=(--source "${{ runner.temp }}/openshiina-src" --github-output "$GITHUB_OUTPUT")
+          if [ -n "${{ inputs.target_commit }}" ]; then
+            ARGS+=(--target-commit "${{ inputs.target_commit }}")
+          fi
+          if [ "$IS_RELEASE" = "true" ]; then
+            ARGS+=(--release-tag "$RELEASE_TAG")
+          fi
+
+          python3 tools/openshiina/sync-upstream.py "${ARGS[@]}"
+          {
+            echo "is_release=$IS_RELEASE"
+            echo "release_tag=$RELEASE_TAG"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: 运行全部工具、契约单测与上游目录一致性校验
         run: |
+          python3 tools/openshiina/check-host-manifest.py
           python3 tools/openshiina/test-host-manifest.py
           python3 tools/openshiina/test-upstream-integrity.py
           python3 tools/openshiina/test-export-catalog.py
           python3 tools/openshiina/test-sync-upstream.py
+          python3 tools/openshiina/verify-upstream.py --source "${{ runner.temp }}/openshiina-src" --patched
+          python3 tools/openshiina/export-catalog.py --source "${{ runner.temp }}/openshiina-src" --check
           dotnet test engine/openshiina/host-apk/Tyranor.OpenShiina.Host.Tests/Tyranor.OpenShiina.Host.Tests.csproj -c Release
 
-      - name: 检出锁定 OpenShiina 上游提交
+      - name: 安装 Android 工作负载与 SDK 依赖
         run: |
-          REPO_URL=$(jq -r '.upstream.repo' engine/openshiina/source-lock.json)
-          COMMIT_SHA=$(jq -r '.upstream.commit' engine/openshiina/source-lock.json)
-          git -c core.autocrlf=false clone "$REPO_URL" "${{ runner.temp }}/openshiina-src"
-          git -C "${{ runner.temp }}/openshiina-src" checkout --detach "$COMMIT_SHA"
+          dotnet workload install android
+          dotnet build engine/openshiina/host-apk/Tyranor.OpenShiina.Host/Tyranor.OpenShiina.Host.csproj \
+            -t:InstallAndroidDependencies \
+            -f net10.0-android \
+            -p:AndroidSdkDirectory="$ANDROID_HOME" \
+            -p:AcceptAndroidSDKLicenses=true \
+            -p:OpenShiinaSource="${{ runner.temp }}/openshiina-src"
 
       - name: 构建并校验外置宿主 APK
         env:
@@ -65,16 +108,34 @@ jobs:
         run: |
           mkdir -p "${{ runner.temp }}/dist"
           OUT_APK="${{ runner.temp }}/dist/Tyranor-Next-ShiinaRio.apk"
-          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
-            KS_PATH="${{ runner.temp }}/release.keystore"
-            echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$KS_PATH"
+          KS_PATH="${{ runner.temp }}/release.keystore"
+          trap 'rm -f "$KS_PATH"' EXIT
+
+          if [ "${{ steps.sync.outputs.is_release }}" = "true" ]; then
+            for var_name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
+              if [ -z "${!var_name}" ]; then
+                echo "正式发版缺少必需签名 Secret：$var_name" >&2
+                exit 1
+              fi
+            done
+            printf '%s' "$ANDROID_KEYSTORE_BASE64" | tr -d '[:space:]' | base64 -d > "$KS_PATH"
             python3 tools/openshiina/build-apk.py \
+              --skip-apply-patches \
               --source "${{ runner.temp }}/openshiina-src" \
               --build-root "${{ runner.temp }}/openshiina-build" \
               --keystore "$KS_PATH" \
               --output-apk "$OUT_APK"
-          elif [ "$USE_DEV_SIGNING" = "true" ] && [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          elif [ -n "$ANDROID_KEYSTORE_BASE64" ] && [ -n "$ANDROID_KEYSTORE_PASSWORD" ] && [ -n "$ANDROID_KEY_ALIAS" ] && [ -n "$ANDROID_KEY_PASSWORD" ]; then
+            printf '%s' "$ANDROID_KEYSTORE_BASE64" | tr -d '[:space:]' | base64 -d > "$KS_PATH"
             python3 tools/openshiina/build-apk.py \
+              --skip-apply-patches \
+              --source "${{ runner.temp }}/openshiina-src" \
+              --build-root "${{ runner.temp }}/openshiina-build" \
+              --keystore "$KS_PATH" \
+              --output-apk "$OUT_APK"
+          elif [ "$USE_DEV_SIGNING" = "true" ]; then
+            python3 tools/openshiina/build-apk.py \
+              --skip-apply-patches \
               --dev \
               --source "${{ runner.temp }}/openshiina-src" \
               --build-root "${{ runner.temp }}/openshiina-build" \
@@ -83,10 +144,76 @@ jobs:
             echo "缺少 Release 签名 Secrets，拒绝产出未签名发布包" >&2
             exit 1
           fi
-          sha256sum "$OUT_APK" > "${{ runner.temp }}/dist/SHA256SUMS.txt"
+
+          (cd "${{ runner.temp }}/dist" && sha256sum Tyranor-Next-ShiinaRio.apk > SHA256SUMS.txt)
           cp LICENSE NOTICE.md "${{ runner.temp }}/dist/"
           cp "${{ runner.temp }}/openshiina-src/LICENSE" "${{ runner.temp }}/dist/UPSTREAM-LICENSE"
           cp "${{ runner.temp }}/openshiina-src/THIRD-PARTY-NOTICES.md" "${{ runner.temp }}/dist/UPSTREAM-THIRD-PARTY-NOTICES.md"
+
+      - name: 回写上游同步锁定结果至 main 并对齐标签
+        id: commit_sync
+        if: steps.sync.outputs.is_release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.sync.outputs.release_tag }}
+          NEW_COMMIT: ${{ steps.sync.outputs.new_commit }}
+          NEW_TAG: ${{ steps.sync.outputs.new_tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain -- engine/openshiina/source-lock.json engine/openshiina/games.json)" ]; then
+            mkdir -p "${{ runner.temp }}/sync-files"
+            cp engine/openshiina/source-lock.json engine/openshiina/games.json "${{ runner.temp }}/sync-files/"
+            git checkout -- engine/openshiina/source-lock.json engine/openshiina/games.json
+            git fetch origin main
+            git checkout -B main origin/main
+            cp "${{ runner.temp }}/sync-files/source-lock.json" engine/openshiina/source-lock.json
+            cp "${{ runner.temp }}/sync-files/games.json" engine/openshiina/games.json
+            if [ -n "$(git status --porcelain -- engine/openshiina/source-lock.json engine/openshiina/games.json)" ]; then
+              git add engine/openshiina/source-lock.json engine/openshiina/games.json
+              UPSTREAM_LABEL="${NEW_TAG:-${NEW_COMMIT:0:12}}"
+              git commit -m "chore(release): ${RELEASE_TAG} 同步 OpenShiina 上游至 ${UPSTREAM_LABEL}"
+              git push origin HEAD:refs/heads/main
+            fi
+            git tag -f "$RELEASE_TAG" HEAD
+            git push -f origin "refs/tags/${RELEASE_TAG}"
+          else
+            HEAD_SHA="$(git rev-parse HEAD)"
+            REMOTE_TAG_SHA="$(git ls-remote origin "refs/tags/${RELEASE_TAG}^{}" | awk '{print $1}')"
+            if [ -z "$REMOTE_TAG_SHA" ]; then
+              REMOTE_TAG_SHA="$(git ls-remote origin "refs/tags/${RELEASE_TAG}" | awk '{print $1}')"
+            fi
+            if [ "$REMOTE_TAG_SHA" != "$HEAD_SHA" ]; then
+              git tag -f "$RELEASE_TAG" HEAD
+              git push -f origin "refs/tags/${RELEASE_TAG}"
+            fi
+          fi
+          echo "target_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: 生成 Release 说明
+        if: steps.sync.outputs.is_release == 'true'
+        env:
+          RELEASE_TAG: ${{ steps.sync.outputs.release_tag }}
+          OLD_COMMIT: ${{ steps.sync.outputs.old_commit }}
+          NEW_COMMIT: ${{ steps.sync.outputs.new_commit }}
+          NEW_TAG: ${{ steps.sync.outputs.new_tag }}
+          PATCH_COUNT: ${{ steps.sync.outputs.patch_count }}
+          SCHEME_COUNT: ${{ steps.sync.outputs.scheme_count }}
+          MAPPED_FILES_COUNT: ${{ steps.sync.outputs.mapped_files_count }}
+          FORMATS_VERSION: ${{ steps.sync.outputs.formats_version }}
+          VERSION_CODE: ${{ steps.sync.outputs.version_code }}
+          VERSION_NAME: ${{ steps.sync.outputs.version_name }}
+        run: |
+          cat > "${{ runner.temp }}/release-notes.md" <<EOF
+          ## Tyranor Next ShiinaRio ${RELEASE_TAG}
+
+          - **宿主包名**：\`com.tyranor.next.shiinario\`（无桌面启动图标，仅接受 \`Tyranor-Next\` 显式调用并在独立 \`:game\` 进程运行）
+          - **宿主版本**：\`${VERSION_NAME}\`（\`versionCode=${VERSION_CODE}\`）
+          - **同步上游**（\`kagaminehaku/OpenShiina\`）：\`${NEW_COMMIT}\`（${NEW_TAG:-无标签}，上一锁定提交 \`${OLD_COMMIT:0:12}\`）
+          - **上游补丁队列**：${PATCH_COUNT} 个补丁
+          - **内嵌识别目录**：${SCHEME_COUNT} 个具名游戏方案、${MAPPED_FILES_COUNT} 个入口映射（\`Formats v${FORMATS_VERSION}\`）
+          EOF
 
       - name: 上传构建产物与许可证清单
         uses: actions/upload-artifact@v4
@@ -94,10 +221,14 @@ jobs:
           name: tyranor-next-shiinario-apk
           path: ${{ runner.temp }}/dist/*
 
-      - name: 发布 GitHub Release（标签触发）
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: 发布 GitHub Release
+        if: steps.sync.outputs.is_release == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          name: "Tyranor Next ShiinaRio ${{ github.ref_name }}"
+          tag_name: ${{ steps.sync.outputs.release_tag }}
+          target_commitish: ${{ steps.commit_sync.outputs.target_sha }}
+          name: "Tyranor Next ShiinaRio ${{ steps.sync.outputs.release_tag }}"
+          body_path: ${{ runner.temp }}/release-notes.md
           files: ${{ runner.temp }}/dist/*
           generate_release_notes: true
+          make_latest: true

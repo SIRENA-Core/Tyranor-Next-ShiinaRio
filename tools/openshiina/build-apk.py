@@ -240,6 +240,12 @@ def main(argv: list[str] | None = None) -> int:
         env["ANDROID_SDK_ROOT"] = str(android_sdk)
         env["JAVA_HOME"] = str(java_home)
         env["DOTNET_CLI_TELEMETRY_OPTOUT"] = "1"
+        env["TYN_ANDROID_STORE_PASS"] = str(store_pass)
+        env["TYN_ANDROID_KEY_PASS"] = str(key_pass)
+
+        host_cfg = lock["host"]
+        version_code = int(host_cfg["versionCode"])
+        version_name = str(host_cfg["versionName"])
 
         cmd = [
             str(dotnet),
@@ -258,15 +264,17 @@ def main(argv: list[str] | None = None) -> int:
             f"-p:OpenShiinaSource={source_dir}",
             f"-p:AndroidSdkDirectory={android_sdk}",
             f"-p:JavaSdkDirectory={java_home}",
+            f"-p:ApplicationVersion={version_code}",
+            f"-p:ApplicationDisplayVersion={version_name}",
             "-p:AndroidPackageFormat=apk",
             "-p:AndroidKeyStore=true",
             f"-p:AndroidSigningKeyStore={keystore}",
-            f"-p:AndroidSigningStorePass={store_pass}",
+            "-p:AndroidSigningStorePass=env:TYN_ANDROID_STORE_PASS",
             f"-p:AndroidSigningKeyAlias={key_alias}",
-            f"-p:AndroidSigningKeyPass={key_pass}",
+            "-p:AndroidSigningKeyPass=env:TYN_ANDROID_KEY_PASS",
         ]
         if args.rids:
-            cmd.append(f"-p:RuntimeIdentifiers={args.rids}")
+            cmd.append(f"-p:HostRuntimeIdentifiers={args.rids}")
 
         proc = subprocess.run(cmd, env=env, check=False)
         if proc.returncode != 0:

@@ -20,8 +20,9 @@
    - `ShiinaRioRequest.TryParse` 必须校验协议版本号、引擎标识、绝对路径且拒绝任何 `.`/`..`/控制字符穿越。
    - `ShiinaRioSettings.Parse` 必须限制 JSON 体积、校验枚举值并钳制数值区间（如 `fsrSharpness` `[0, 20]`）。
    - `ShiinaRioRequest.ComputeGameKey` 公式（`SHA-256("<target>\n<canonicalDir>")`）不得擅自变更，否则将破坏各游戏 `OPENSHIINA_DATA` 隔离目录兼容性。
-4. **目录同步与零污染构建**
+4. **目录同步、零污染构建与发版自动同步**
    - [`engine/openshiina/games.json`](engine/openshiina/games.json) 必须与锁定上游 `Formats.Json` 导出结果字节等价，并过滤通用兜底方案名。
+   - 每次发版均须同步上游更新：发版工作流（[`.github/workflows/openshiina-host-release.yml`](.github/workflows/openshiina-host-release.yml)）在构建正式 Release 时自动调用 `sync-upstream.py --release-tag <tag>` 拉取最新上游提交、刷新 `games.json` 与 `source-lock.json`，并在全套测试及 APK 校验通过后回写 `main`。
    - 构建中间目录（`ArtifactsPath`、`BaseOutputPath`、`dev-debug.keystore` 等）一律重定向到仓库与上游外部目录，确保双方 `git status` 干净。
 5. **编码规范**
    - 全仓库文本使用 UTF-8（无 BOM）与 `LF` 行尾（`*.patch` 在 `.gitattributes` 中设为 `-text`）。

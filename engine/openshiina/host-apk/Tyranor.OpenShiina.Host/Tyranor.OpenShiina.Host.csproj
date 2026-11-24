@@ -11,7 +11,8 @@
     <UseMonoRuntime>false</UseMonoRuntime>
     <UseCurrentRuntimeIdentifier>false</UseCurrentRuntimeIdentifier>
     <UseDefaultPublishRuntimeIdentifier>false</UseDefaultPublishRuntimeIdentifier>
-    <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">android-arm64;android-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="'$(HostRuntimeIdentifiers)' != ''">$(HostRuntimeIdentifiers)</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="'$(HostRuntimeIdentifiers)' == '' and '$(RuntimeIdentifiers)' == ''">android-arm64;android-x64</RuntimeIdentifiers>
     <AndroidManifest>Properties/AndroidManifest.xml</AndroidManifest>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <OpenShiinaSource Condition="'$(OpenShiinaSource)' == ''">$(OPENSHIINA_SOURCE)</OpenShiinaSource>
@@ -25,11 +26,11 @@
     <ProjectReference Include="$(OpenShiinaSource)/src/OpenShiina.App/OpenShiina.App.csproj" />
     <ProjectReference Include="$(OpenShiinaSource)/src/OpenShiina.Core/OpenShiina.Core.csproj" />
     <ProjectReference Include="$(OpenShiinaSource)/src/OpenShiina.Gpu/OpenShiina.Gpu.csproj" />
-    <AndroidAsset Include="$(OpenShiinaSource)/src/OpenShiina.Core/Data/Formats.Json" Link="Assets/Formats.Json" />
+    <AndroidAsset Include="$(OpenShiinaSource)/src/OpenShiina.Core/Data/Formats.Json" LogicalName="Formats.Json" />
   </ItemGroup>
 
   <ItemGroup>
-    <AndroidAsset Include="$(MSBuildThisFileDirectory)../../games.json" Link="Assets/tyn/games.json" />
+    <AndroidAsset Include="$(MSBuildThisFileDirectory)../../games.json" LogicalName="tyn/games.json" />
   </ItemGroup>
 
   <ItemGroup>

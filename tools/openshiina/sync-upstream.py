@@ -48,6 +48,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--target-commit", default=None, help="指定同步的目标提交（默认拉取远端跟踪分支）")
     parser.add_argument("--branch", default=None, help="指定上游分支名（默认读取 source-lock.json）")
     parser.add_argument("--no-fetch", action="store_true", help="离线模式：跳过 git fetch，仅从本地引用解析")
+    parser.add_argument("--release-tag", default=None, help="可选：发版标签（如 v0.1.0），自动同步 host.versionName 与递增 versionCode")
+    parser.add_argument("--version-code", type=int, default=None, help="可选：显式指定 host.versionCode")
     parser.add_argument("--dry-run", action="store_true", help="试运行：验证合并与目录生成但不写入仓库文件")
     parser.add_argument("--json", action="store_true", help="以 JSON 格式输出同步摘要")
     parser.add_argument("--github-output", type=Path, default=None, help="可选：写入 GITHUB_OUTPUT 格式变量")
@@ -71,6 +73,16 @@ def clone_if_missing(source_dir: Path, repo_url: str) -> None:
         raise RuntimeError(f"克隆上游仓库失败：{proc.stderr or proc.stdout}")
 
 
+def _parse_release_version_name(release_tag: str) -> str:
+    raw = release_tag.strip()
+    if not raw or any(ch.isspace() for ch in raw) or "/" in raw:
+        raise ValueError(f"非法的 release_tag：{release_tag!r}")
+    version_name = raw[1:] if raw.startswith("v") else raw
+    if not version_name:
+        raise ValueError(f"非法的 release_tag：{release_tag!r}")
+    return version_name
+
+
 def resolve_tag_for_commit(source_dir: Path, commit: str) -> str:
     """查找命中的精确 tag，否则退回最近的可达 tag；无 tag 时返回空串。"""
     exact = run_git(source_dir, ["describe", "--tags", "--exact-match", commit], check=False)
@@ -91,6 +103,8 @@ def sync_upstream(
     catalog_path: Path = GAMES_CATALOG_PATH,
     target_commit: str | None = None,
     branch: str | None = None,
+    release_tag: str | None = None,
+    version_code: int | None = None,
     fetch: bool = True,
     dry_run: bool = False,
 ) -> dict[str, Any]:
@@ -132,6 +146,20 @@ def sync_upstream(
     updated_lock["upstream"]["commit"] = new_commit
     updated_lock["upstream"]["tag"] = new_tag
 
+    host_cfg = updated_lock.get("host")
+    if (release_tag is not None or version_code is not None) and isinstance(host_cfg, dict):
+        old_version_name = str(host_cfg.get("versionName", ""))
+        old_version_code = int(host_cfg.get("versionCode", 1))
+        target_version_name = old_version_name
+        if release_tag is not None:
+            target_version_name = _parse_release_version_name(release_tag)
+            host_cfg["versionName"] = target_version_name
+        if version_code is not None:
+            host_cfg["versionCode"] = int(version_code)
+        elif release_tag is not None and target_version_name != old_version_name:
+            host_cfg["versionCode"] = old_version_code + 1
+    version_changed = updated_lock.get("host") != lock.get("host")
+
     rel_formats = updated_lock.get("catalog", {}).get(
         "sourcePath", "src/OpenShiina.Core/Data/Formats.Json"
     )
@@ -144,21 +172,25 @@ def sync_upstream(
     commit_changed = old_commit != new_commit or old_tag != new_tag
 
     if not dry_run:
-        if commit_changed or not lock_path.is_file():
+        if commit_changed or version_changed or not lock_path.is_file():
             save_lock(updated_lock, lock_path)
         if catalog_changed or not catalog_path.is_file():
             export_catalog_mod.export_catalog(
                 source_dir, lock_path=lock_path, output_path=catalog_path, check_only=False
             )
 
+    resolved_host = updated_lock.get("host") if isinstance(updated_lock.get("host"), dict) else {}
     return {
-        "changed": commit_changed or catalog_changed,
+        "changed": commit_changed or catalog_changed or version_changed,
         "commitChanged": commit_changed,
         "catalogChanged": catalog_changed,
+        "versionChanged": version_changed,
         "oldCommit": old_commit,
         "newCommit": new_commit,
         "oldTag": old_tag,
         "newTag": new_tag,
+        "versionCode": resolved_host.get("versionCode", ""),
+        "versionName": resolved_host.get("versionName", ""),
         "patchCount": len(patches),
         "schemeCount": len(payload["schemes"]),
         "mappedFilesCount": len(payload["gameMap"]),
@@ -178,6 +210,8 @@ def main(argv: list[str] | None = None) -> int:
             catalog_path=args.catalog.resolve(),
             target_commit=args.target_commit,
             branch=args.branch,
+            release_tag=args.release_tag,
+            version_code=args.version_code,
             fetch=not args.no_fetch,
             dry_run=args.dry_run,
         )
@@ -191,11 +225,16 @@ def main(argv: list[str] | None = None) -> int:
     if gh_out is not None:
         lines = [
             f"changed={'true' if summary['changed'] else 'false'}",
+            f"version_changed={'true' if summary['versionChanged'] else 'false'}",
             f"old_commit={summary['oldCommit']}",
             f"new_commit={summary['newCommit']}",
             f"old_tag={summary['oldTag']}",
             f"new_tag={summary['newTag']}",
+            f"version_code={summary['versionCode']}",
+            f"version_name={summary['versionName']}",
+            f"patch_count={summary['patchCount']}",
             f"scheme_count={summary['schemeCount']}",
+            f"mapped_files_count={summary['mappedFilesCount']}",
             f"formats_version={summary['formatsVersion']}",
         ]
         gh_out.parent.mkdir(parents=True, exist_ok=True)
