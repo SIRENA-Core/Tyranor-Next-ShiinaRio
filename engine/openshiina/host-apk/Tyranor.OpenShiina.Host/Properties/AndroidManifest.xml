@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tyranor.next.shiinario">
+
+  <!-- 读取外置存储目录（Android 10 及以下 + Android 11+ 全盘访问权限） -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+  <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+  <uses-feature android:glEsVersion="0x00030000" android:required="true" />
+  <uses-feature android:name="android.hardware.vulkan.version" android:required="false" />
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+  <application
+      android:name="com.tyranor.next.shiinario.TyranorShiinaRioApplication"
+      android:allowBackup="false"
+      android:hardwareAccelerated="true"
+      android:hasFragileUserData="true"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/app_name"
+      android:requestLegacyExternalStorage="true"
+      android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
+    <!-- 仅向 Tyranor-Next 暴露的显式启动入口；严禁声明 LAUNCHER / MAIN -->
+    <activity
+        android:name="com.tyranor.next.shiinario.ShiinaRioLaunchActivity"
+        android:excludeFromRecents="true"
+        android:exported="true"
+        android:launchMode="singleTask"
+        android:noHistory="true"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar">
+      <intent-filter>
+        <action android:name="com.tyranor.next.action.LAUNCH_SHIINARIO" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+
+    <!-- 隔离在 :game 进程中的实际运行界面，不对外导出 -->
+    <activity
+        android:name="com.tyranor.next.shiinario.TyranorShiinaRioActivity"
+        android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard|navigation|uiMode|density"
+        android:exported="false"
+        android:launchMode="singleTask"
+        android:process=":game"
+        android:screenOrientation="sensorLandscape"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+  </application>
+</manifest>

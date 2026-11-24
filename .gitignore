@@ -1,0 +1,19 @@
+bin/
+obj/
+build/
+.vs/
+.idea/
+.vscode/
+*.user
+*.apk
+*.aab
+*.so
+*.log
+*.hprof
+# 签名密钥绝不进入仓库
+*.jks
+*.keystore
+*.p12
+__pycache__/
+release-assets/
+local.properties

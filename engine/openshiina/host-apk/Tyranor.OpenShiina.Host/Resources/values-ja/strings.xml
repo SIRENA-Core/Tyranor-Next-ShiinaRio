@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Tyranor ShiinaRio エンジン</string>
+  <string name="err_title">ShiinaRio ゲームを起動できません</string>
+  <string name="err_invalid_request">起動パラメータが無効、またはプロトコル非対応です：%1$s</string>
+  <string name="err_storage_permission">外部ゲームフォルダを読み取るため、「すべてのファイルへのアクセス」権限を許可してください。</string>
+  <string name="err_open_failed">OpenShiina でゲームフォルダを開けませんでした：%1$s</string>
+  <string name="btn_grant_permission">設定を開く</string>
+  <string name="btn_close">閉じる</string>
+</resources>

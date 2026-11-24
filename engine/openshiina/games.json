@@ -1,0 +1,1515 @@
+{
+  "schemaVersion": 1,
+  "engine": "openshiina",
+  "formatsVersion": 149,
+  "upstreamCommit": "14a24de703fb77c743ea6e0328f8e69fa26f3127",
+  "upstreamTag": "v0.8.7",
+  "genericSchemes": [
+    "ShiinaRio v2.34 and older",
+    "ShiinaRio v2.36-2.38"
+  ],
+  "schemes": [
+    {
+      "name": "Aneiro",
+      "originalTitle": "アネイロ",
+      "version": 2490,
+      "executables": [
+        "ANEIRO.exe"
+      ]
+    },
+    {
+      "name": "Ao no Juuai",
+      "originalTitle": "青の獣愛",
+      "version": 2340,
+      "executables": [
+        "aoj.EXE"
+      ]
+    },
+    {
+      "name": "Ayakashibito",
+      "originalTitle": "あやかしびと",
+      "version": 2340,
+      "executables": [
+        "ayakasi.EXE"
+      ]
+    },
+    {
+      "name": "Azu Plus",
+      "originalTitle": "アズプラス",
+      "version": 2470,
+      "executables": [
+        "AZUPLUS.exe"
+      ]
+    },
+    {
+      "name": "Baby, BE -Bedside Emotion-",
+      "originalTitle": "Ｂａｂｙ，ＢＥ",
+      "version": 2100,
+      "executables": [
+        "BBB.EXE"
+      ]
+    },
+    {
+      "name": "Bitch Gakuen ga Seijun na Hazu ga Nai!!?",
+      "originalTitle": "ビッチ学園が清純なはずがないっ！！？",
+      "version": 2500,
+      "executables": [
+        "BITCHES3.exe"
+      ]
+    },
+    {
+      "name": "Bitch Nee-chan ga Seijun na Hazu ga Nai!",
+      "originalTitle": "ビッチ姉ちゃんが清純なはずがないっ！",
+      "version": 2500,
+      "executables": [
+        "BITCHES.EXE"
+      ]
+    },
+    {
+      "name": "Bitch Shimai ga Seijun na Hazu ga Nai!!",
+      "originalTitle": "ビッチ姉妹が清純なはずがないっ！！",
+      "version": 2500,
+      "executables": [
+        "BITCHES2.exe"
+      ]
+    },
+    {
+      "name": "Bloody Rondo",
+      "originalTitle": "BLOODY†RONDO",
+      "version": 2480,
+      "executables": [
+        "BR.EXE"
+      ]
+    },
+    {
+      "name": "Boku Igai no Otoko o Shiranai Kanojo",
+      "originalTitle": "僕以外の男を知らない彼女が他の男に抱かれていた",
+      "version": 2490,
+      "executables": [
+        "MATNTR.exe"
+      ]
+    },
+    {
+      "name": "Can Fes! ~Itazura Majo to Naisho no Gakuensai~",
+      "originalTitle": "きゃん☆フェス！～いたずら魔女とナイショの学園祭～",
+      "version": 2470,
+      "executables": [
+        "CANFES.EXE"
+      ]
+    },
+    {
+      "name": "CC Hospital",
+      "originalTitle": "CCホスピタル",
+      "version": 2360,
+      "executables": [
+        "CCH.EXE"
+      ]
+    },
+    {
+      "name": "Chain Trap ~Fukushuu no Midara Wana~",
+      "originalTitle": "CHAIN TRAP ～復讐の淫罠～",
+      "version": 2300,
+      "executables": [
+        "CTRAP.EXE"
+      ]
+    },
+    {
+      "name": "Chiccha na Hanayome ~Mada Mada Tsubomi da mon~",
+      "originalTitle": "ちっちゃな花嫁 ～まだまだつぼみだもんっ～",
+      "version": 2500,
+      "executables": [
+        "CHIPPANA.exe"
+      ]
+    },
+    {
+      "name": "Chikan Circle",
+      "originalTitle": "痴漢サークル",
+      "version": 2460,
+      "executables": [
+        "tikan1.exe",
+        "tikan1~.exe"
+      ]
+    },
+    {
+      "name": "Chikan Circle 2",
+      "originalTitle": "痴漢サークル2",
+      "version": 2470,
+      "executables": [
+        "CHIKAN2.exe",
+        "CHIKAN2_.exe"
+      ]
+    },
+    {
+      "name": "Chikan Circle 3",
+      "originalTitle": "痴漢サークル3",
+      "version": 2470,
+      "executables": [
+        "CHIKAN3.exe",
+        "CHIKAN3_.exe"
+      ]
+    },
+    {
+      "name": "Chikan Densha Otoko 2",
+      "originalTitle": "痴漢電車男2 ～伝説へのライナー～",
+      "version": 2430,
+      "executables": [
+        "TRAIN2.exe"
+      ]
+    },
+    {
+      "name": "Chikan Densha Otoko Gaiden",
+      "originalTitle": "痴漢電車男外伝 ～伝説へのチェイサー～",
+      "version": 2470,
+      "executables": [
+        "TRAING.EXE"
+      ]
+    },
+    {
+      "name": "Chou Saiminjutsu Gakuen",
+      "originalTitle": "超催眠術学園",
+      "version": 2490,
+      "executables": [
+        "CHOSAIMIN.EXE"
+      ]
+    },
+    {
+      "name": "Chuuchuu Nurse",
+      "originalTitle": "ちゅうちゅうナース",
+      "version": 2450,
+      "executables": [
+        "CHUCHU.EXE"
+      ]
+    },
+    {
+      "name": "Chuuni Hime no Teikoku",
+      "originalTitle": "厨二姫の帝国",
+      "version": 2500,
+      "executables": [
+        "CHU2HIME.exe"
+      ]
+    },
+    {
+      "name": "Classmate no Okaa-san",
+      "originalTitle": "クラスメイトのお母さん",
+      "version": 2370,
+      "executables": [
+        "CLASS.exe"
+      ]
+    },
+    {
+      "name": "Cleavage",
+      "originalTitle": "Cleavage",
+      "version": 2330,
+      "executables": [
+        "CLEAVAGE.EXE"
+      ]
+    },
+    {
+      "name": "Cruise☆Cruise ~Shoujo no 10nen to Chiisana Yakusoku~",
+      "originalTitle": "くる～ず☆クルーズ～少女の10年とちいさな約束～",
+      "version": 2460,
+      "executables": [
+        "KURUKURU.EXE"
+      ]
+    },
+    {
+      "name": "Damatte Watashi no Muko ni Nare!",
+      "originalTitle": "黙って私のムコになれ！",
+      "version": 2470,
+      "executables": [
+        "DAMAMUKO.EXE"
+      ]
+    },
+    {
+      "name": "Danchi Wife ~Hitozuma Nude Model no Kenshin~",
+      "originalTitle": "団地ワイフ～人妻ヌードモデルの献身～",
+      "version": 2470,
+      "executables": [
+        "DANCHIDL.exe",
+        "DANCHIDL_.exe"
+      ]
+    },
+    {
+      "name": "Death☆Meta",
+      "originalTitle": "Death☆Meta",
+      "version": 2330,
+      "executables": [
+        "DEATH.EXE"
+      ]
+    },
+    {
+      "name": "Dokodemo Sukishite Itsudemo Sukishite",
+      "originalTitle": "どこでもすきしていつでもすきして",
+      "version": 2440,
+      "executables": [
+        "SITESITE.exe"
+      ]
+    },
+    {
+      "name": "Douryou no Oku-san ~Netori Tsuma, Netorare Tsuma~",
+      "originalTitle": "同僚の奥さん～ネトリ妻、ネトラレ妻～",
+      "version": 2460,
+      "executables": [
+        "dou.exe"
+      ]
+    },
+    {
+      "name": "Doushite Daite Kurenai no!?",
+      "originalTitle": "どうして抱いてくれないのっ!?～女の子だってヤりたいの！～",
+      "version": 2490,
+      "executables": [
+        "DODAKURE.exe"
+      ]
+    },
+    {
+      "name": "Draculius",
+      "originalTitle": "ドラクリウス",
+      "version": 2380,
+      "executables": [
+        "DRA.EXE"
+      ]
+    },
+    {
+      "name": "EDEN IV",
+      "originalTitle": "ＥＤＥＮ４",
+      "version": 2340,
+      "executables": [
+        "EDEN4.EXE"
+      ]
+    },
+    {
+      "name": "EDEN V",
+      "originalTitle": "ＥＤＥＮ５",
+      "version": 2340,
+      "executables": [
+        "EDEN5.EXE"
+      ]
+    },
+    {
+      "name": "EDEN ~FINAL~",
+      "originalTitle": "ＥＤＥＮ～ＦＩＮＡＬ～",
+      "version": 2300,
+      "executables": [
+        "EDENF.EXE"
+      ]
+    },
+    {
+      "name": "Engage Links",
+      "originalTitle": "Engage Links",
+      "version": 2450,
+      "executables": [
+        "ENGAGE.exe"
+      ]
+    },
+    {
+      "name": "ERO-ON",
+      "originalTitle": "ERO-ON",
+      "version": 2470,
+      "executables": [
+        "ERO_ON.EXE"
+      ]
+    },
+    {
+      "name": "Gakuen Pets 2 ~Pool Side no Shiiku Katsudou~",
+      "originalTitle": "学園ペッツ2 ～プールサイドの飼育活動～",
+      "version": 2450,
+      "executables": [
+        "GPETS2.EXE"
+      ]
+    },
+    {
+      "name": "Gakuen Pets 3 ~Seieki Mamire no Toshokan~",
+      "originalTitle": "学園ペッツ3～精液まみれの図書館～",
+      "version": 2470,
+      "executables": [
+        "GPETS3.EXE"
+      ]
+    },
+    {
+      "name": "Gakuen Pets ~Houkago no Shiikusha~",
+      "originalTitle": "学園ペッツ ～放課後の飼育舎～",
+      "version": 2400,
+      "executables": [
+        "GPETS.EXE"
+      ]
+    },
+    {
+      "name": "Gakushoku no Oba-san The Motion",
+      "originalTitle": "学食のおばさん The Motion ～母さんの汁の味～",
+      "version": 2480,
+      "executables": [
+        "GAKUOBAm.exe"
+      ]
+    },
+    {
+      "name": "Gensou no Idea ~Oratorio Phantasm Historia~",
+      "originalTitle": "幻創のイデア～Oratorio Phantasm Historia～",
+      "version": 2490,
+      "executables": [
+        "IDEA.EXE"
+      ]
+    },
+    {
+      "name": "Gibo to Oba ~Soshite Yuujin no Haha~",
+      "originalTitle": "義母と叔母 ～そして友人の母～",
+      "version": 2360,
+      "executables": [
+        "MAMA.EXE"
+      ]
+    },
+    {
+      "name": "Gohoushi Nurse ~Mayonaka no Kyousei Call~",
+      "originalTitle": "ご奉仕ナース ～真夜中の強精コール～",
+      "version": 2500,
+      "executables": [
+        "GHNURSE.exe"
+      ]
+    },
+    {
+      "name": "Gyaku Katei Kyoushi",
+      "originalTitle": "逆家庭教師 ～彼女は僕の先生にして奴隷～",
+      "version": 2500,
+      "executables": [
+        "GYAKUKATE.exe"
+      ]
+    },
+    {
+      "name": "Hachigatsu no Nostalgia ~The Summer with You~",
+      "originalTitle": "八月のノスタルジア ～the summer with you～",
+      "version": 2340,
+      "executables": [
+        "ADVLOVE.EXE"
+      ]
+    },
+    {
+      "name": "Hana no Kioku 1-2-3",
+      "originalTitle": "花の記憶 わん・つう・すり～",
+      "version": 2100,
+      "executables": [
+        "HK123.EXE"
+      ]
+    },
+    {
+      "name": "Hana no Kioku 4-5-6",
+      "originalTitle": "花の記憶 よん・ごー・ろく",
+      "version": 2190,
+      "executables": [
+        "HK456.EXE"
+      ]
+    },
+    {
+      "name": "Hana no Kioku 7",
+      "originalTitle": "花の記憶 ～第七章～",
+      "version": 2180,
+      "executables": [
+        "HK7.EXE"
+      ]
+    },
+    {
+      "name": "Hana to Otome ni Shukufuku o",
+      "originalTitle": "花と乙女に祝福を",
+      "version": 2460,
+      "executables": [
+        "HANAOTO.exe"
+      ]
+    },
+    {
+      "name": "Hana to Otome ni Shukufuku o Royal Bouquet",
+      "originalTitle": "花と乙女に祝福を ロイヤルブーケ",
+      "version": 2470,
+      "executables": [
+        "HANARB.EXE"
+      ]
+    },
+    {
+      "name": "Helter Skelter",
+      "originalTitle": "ヘルタースケルター",
+      "version": 2400,
+      "executables": [
+        "HELTER.exe"
+      ]
+    },
+    {
+      "name": "Hin wa Bokura no Fuku no Kami",
+      "originalTitle": "貧は僕らの福の神",
+      "version": 2490,
+      "executables": [
+        "BINBO.EXE"
+      ]
+    },
+    {
+      "name": "Hitozuma Gui ~Manbiki G-man Chijoku Nikki~",
+      "originalTitle": "人妻喰い ～万引きGメン恥辱日記～",
+      "version": 2450,
+      "executables": [
+        "hitoz.exe"
+      ]
+    },
+    {
+      "name": "Hitozuma OL -Chijoku no Gyoumu Meirei-",
+      "originalTitle": "人妻OL -恥辱の業務命令-",
+      "version": 2360,
+      "executables": [
+        "HDOL.EXE"
+      ]
+    },
+    {
+      "name": "Hitozuma Onna Kyoushi Reika",
+      "originalTitle": "人妻女教師・麗香",
+      "version": 2330,
+      "executables": [
+        "HITODUMA.EXE"
+      ]
+    },
+    {
+      "name": "Homu Plus",
+      "originalTitle": "ほむプラス",
+      "version": 2500,
+      "executables": [
+        "HOMUPLUS.EXE"
+      ]
+    },
+    {
+      "name": "Houkago no Hoken'i ~Ane Juujoku~",
+      "originalTitle": "放課後の保健医 ～姉・汁辱～",
+      "version": 2370,
+      "executables": [
+        "hou_nc.EXE"
+      ]
+    },
+    {
+      "name": "Idol Koukai Chijoku Sex",
+      "originalTitle": "アイドル公開恥辱SEX",
+      "version": 2460,
+      "executables": [
+        "ISEX.exe"
+      ]
+    },
+    {
+      "name": "Imouto Smile",
+      "originalTitle": "妹スマイル",
+      "version": 2470,
+      "executables": [
+        "IMOSMILE.EXE"
+      ]
+    },
+    {
+      "name": "Intruder",
+      "originalTitle": "イントルーダー ～侵入者～",
+      "version": 2490,
+      "executables": [
+        "INTRUDER.exe"
+      ]
+    },
+    {
+      "name": "Itsuka, Dokoka de ~Ano Amaoto no Kioku~",
+      "originalTitle": "いつか、どこかで ～あの雨音の記憶～",
+      "version": 2340,
+      "executables": [
+        "ID.EXE"
+      ]
+    },
+    {
+      "name": "Iyashinbo The Motion",
+      "originalTitle": "癒しん母 The Motion ～世界で一番好きなひと～",
+      "version": 2470,
+      "executables": [
+        "IYASHIm.EXE"
+      ]
+    },
+    {
+      "name": "Jukubo Gui ~Moto Guradoru no Okaa-san~",
+      "originalTitle": "熟母喰い ～元グラドルのお母さん～",
+      "version": 2370,
+      "executables": [
+        "JUKUBO.EXE"
+      ]
+    },
+    {
+      "name": "Kanawanu Koi no Monogatari",
+      "originalTitle": "叶わぬ恋の物語",
+      "version": 2100,
+      "executables": [
+        "OWD.EXE"
+      ]
+    },
+    {
+      "name": "Kanojo ga Ore ni Kureta Mono",
+      "originalTitle": "彼女が俺にくれたもの。俺が彼女にあげるもの。",
+      "version": 2500,
+      "executables": [
+        "MONOMONO.exe"
+      ]
+    },
+    {
+      "name": "Kateinai Choukyou",
+      "originalTitle": "家庭内調教",
+      "version": 2310,
+      "executables": [
+        "katei.exe"
+      ]
+    },
+    {
+      "name": "Kichiku Nakadashi Suieibu",
+      "originalTitle": "鬼畜中出し水泳部～キャプテン氷川美玲・汁辱～",
+      "version": 2410,
+      "executables": [
+        "SUIEI.EXE"
+      ]
+    },
+    {
+      "name": "Kiki Mimi",
+      "originalTitle": "ききミミ",
+      "version": 2500,
+      "executables": [
+        "KIKIMIMI.exe"
+      ]
+    },
+    {
+      "name": "Kinpatsu Tarou Monogatari",
+      "originalTitle": "金髪太郎物語",
+      "version": 2500,
+      "executables": [
+        "KINPATSU.exe"
+      ]
+    },
+    {
+      "name": "Kuroneko Plus",
+      "originalTitle": "黒猫プラス",
+      "version": 2490,
+      "executables": [
+        "KURONEKOPLUS.exe"
+      ]
+    },
+    {
+      "name": "Kyuuketsuki no Libra",
+      "originalTitle": "吸血姫のリブラ",
+      "version": 2500,
+      "executables": [
+        "LIBRA.exe"
+      ]
+    },
+    {
+      "name": "Last Waltz ~Hakudaku Mamire no Natsu Gasshuku~",
+      "originalTitle": "Last Waltz ～白濁まみれの夏合宿～",
+      "version": 2470,
+      "executables": [
+        "WALTZ.exe"
+      ]
+    },
+    {
+      "name": "Libra of the Vampire Princess",
+      "originalTitle": "Libra of the Vampire Princess",
+      "version": 2500,
+      "executables": [
+        "LIBRAeS.exe"
+      ]
+    },
+    {
+      "name": "Libra of the Vampire Princess: The Promise PLUS Homeworld",
+      "originalTitle": "Libra of the Vampire Princess: The Promise PLUS Homeworld",
+      "version": 2500,
+      "executables": [
+        "LIBRAeSe.exe"
+      ]
+    },
+    {
+      "name": "Love & Piss",
+      "originalTitle": "Love＆Piss ～少女のガマンが世界を救う～",
+      "version": 2490,
+      "executables": [
+        "LOVEPISS.EXE"
+      ]
+    },
+    {
+      "name": "Lovecha ~Tsumasakidachi de, Hitomi o Tojite~",
+      "originalTitle": "らぶちゃ ～つま先立ちで、瞳をとじて～",
+      "version": 2500,
+      "executables": [
+        "LOVECHA.EXE"
+      ]
+    },
+    {
+      "name": "Mahou no Shippo na Dai Ichi wa",
+      "originalTitle": "魔法のしっぽな 第一話",
+      "version": 2340,
+      "executables": [
+        "SPN1.EXE"
+      ]
+    },
+    {
+      "name": "Mahou no Shippo na Dai San wa",
+      "originalTitle": "魔法のしっぽな 第三話",
+      "version": 2340,
+      "executables": [
+        "SPN3.EXE"
+      ]
+    },
+    {
+      "name": "Mahou Shoujo no Taisetsu na Koto",
+      "originalTitle": "魔法少女の大切なこと。",
+      "version": 2470,
+      "executables": [
+        "MAHOST.exe"
+      ]
+    },
+    {
+      "name": "Majime to Sasayakareru Ore o Jimi Kyonyuu no Nazuna",
+      "originalTitle": "真面目と囁かれるオレを地味巨乳のなずなが性的な意味も込めて陥落していく話",
+      "version": 2500,
+      "executables": [
+        "MAJIKAN02.EXE"
+      ]
+    },
+    {
+      "name": "Majime to Sasayakareru Ore o Osananajimi no Risa",
+      "originalTitle": "真面目と囁かれるオレを幼なじみの理彩が性的な意味も込めて陥落していく話",
+      "version": 2490,
+      "executables": [
+        "MAJIKAN01.exe"
+      ]
+    },
+    {
+      "name": "Maki Fes!",
+      "originalTitle": "マキフェス！",
+      "version": 2500,
+      "executables": [
+        "MAKIFES.exe"
+      ]
+    },
+    {
+      "name": "Manin Chijo Densha 2",
+      "originalTitle": "満淫痴女電車2～姉とふたごと人妻と～",
+      "version": 2450,
+      "executables": [
+        "MCD2.exe"
+      ]
+    },
+    {
+      "name": "Megane Choukyou ~Megane Shoujo wa Ikan ni Shite Kimoota Kyoushi no Mono ni Natta ka~",
+      "originalTitle": "牝鏡調教 ～メガネ少女は如何にしてキモオタ教師のものになったか～",
+      "version": 2490,
+      "executables": [
+        "MEGA.EXE"
+      ]
+    },
+    {
+      "name": "Metro Chikansen  ~Kairaku Jousha Annai~",
+      "originalTitle": "牝トロ痴漢線 ～快楽嬢射案内～",
+      "version": 2380,
+      "executables": [
+        "METRO.EXE"
+      ]
+    },
+    {
+      "name": "Mikoko",
+      "originalTitle": "みここ",
+      "version": 2460,
+      "executables": [
+        "MIKOKO.exe"
+      ]
+    },
+    {
+      "name": "Mimi o Sumaseba",
+      "originalTitle": "みみをすませば",
+      "version": 2470,
+      "executables": [
+        "mimisuma.exe"
+      ]
+    },
+    {
+      "name": "Nagagutsu wo Haita Deco",
+      "originalTitle": "長靴をはいたデコ",
+      "version": 2390,
+      "executables": [
+        "DECO.EXE"
+      ]
+    },
+    {
+      "name": "Najimi no Oba-chan",
+      "originalTitle": "馴染みのオバちゃん",
+      "version": 2470,
+      "executables": [
+        "NAZIMI~.exe"
+      ]
+    },
+    {
+      "name": "Nakadashi Trilogy",
+      "originalTitle": "なかだしトリロジー",
+      "version": 2470,
+      "executables": [
+        "MIKODS.EXE"
+      ]
+    },
+    {
+      "name": "Niizuma to Yuukaihan",
+      "originalTitle": "新妻と誘拐犯 ～寝取り孕ませ計画～",
+      "version": 2450,
+      "executables": [
+        "NIIZUMA.EXE"
+      ]
+    },
+    {
+      "name": "Niwaka Ane",
+      "originalTitle": "にわか姉",
+      "version": 2470,
+      "executables": [
+        "NIWAKA.exe"
+      ]
+    },
+    {
+      "name": "Nukige Mitai na Shima ni Sunderu",
+      "originalTitle": "抜きゲーみたいな島に住んでる貧乳はどうすりゃいいですか?",
+      "version": 2500,
+      "executables": [
+        "NUKITASHI.exe"
+      ]
+    },
+    {
+      "name": "Nukige Mitai na Shima ni Sunderu [Trial]",
+      "originalTitle": "抜きゲーみたいな島に住んでる貧乳はどうすりゃいいですか? 体験版",
+      "version": 2500,
+      "executables": [
+        "NUKITASHI_TRIAL.exe",
+        "NUKITASHI_TRIAL2.exe"
+      ]
+    },
+    {
+      "name": "Nukige Mitai na Shima ni Sunderu... 2",
+      "originalTitle": "抜きゲーみたいな島に住んでる貧乳はどうすりゃいいですか? 2",
+      "version": 2500,
+      "executables": [
+        "NUKITASHI2.EXE"
+      ]
+    },
+    {
+      "name": "Nyaru Plus",
+      "originalTitle": "ニャルプラス",
+      "version": 2490,
+      "executables": [
+        "NYARUPLUS.exe"
+      ]
+    },
+    {
+      "name": "Omocha no Sensei Nawa Midori",
+      "originalTitle": "おもちゃの先生 那波みどり",
+      "version": 2370,
+      "executables": [
+        "RK01.EXE",
+        "RK01_D.WAR",
+        "RK01_S.WAR"
+      ]
+    },
+    {
+      "name": "Onedari Onapet",
+      "originalTitle": "おねだりオナペット",
+      "version": 2470,
+      "executables": [
+        "OONAPET.EXE"
+      ]
+    },
+    {
+      "name": "Onegan!",
+      "originalTitle": "おねガン！",
+      "version": 2480,
+      "executables": [
+        "ONEGAN.exe"
+      ]
+    },
+    {
+      "name": "ONE☆BOKU Faraway so close!",
+      "originalTitle": "ONE☆BOKU Faraway so close!",
+      "version": 2350,
+      "executables": [
+        "one.EXE"
+      ]
+    },
+    {
+      "name": "Oni ga Kuru",
+      "originalTitle": "鬼がくる。～姉がひん死でピンチです～",
+      "version": 2500,
+      "executables": [
+        "ONIKURU.exe"
+      ]
+    },
+    {
+      "name": "Oreimo Plus",
+      "originalTitle": "俺妹プラス",
+      "version": 2470,
+      "executables": [
+        "OREIMOPLUS.exe"
+      ]
+    },
+    {
+      "name": "Oshikake! Entremets",
+      "originalTitle": "おしかけ！アントルメ",
+      "version": 2470,
+      "executables": [
+        "OSHIAN.exe"
+      ]
+    },
+    {
+      "name": "Otome Chibaku Yuugi",
+      "originalTitle": "乙女恥曝遊戯～Disgrace Return Play～",
+      "version": 2400,
+      "executables": [
+        "tibaku.EXE"
+      ]
+    },
+    {
+      "name": "Otome Juurin Yuugi",
+      "originalTitle": "乙女蹂躙遊戯～Maiden Infringement Play～",
+      "version": 2370,
+      "executables": [
+        "OTOME.EXE"
+      ]
+    },
+    {
+      "name": "Otometeki Koi Kakumei★Love Revo!!",
+      "originalTitle": "乙女的恋革命★ラブレボ!!",
+      "version": 2420,
+      "executables": [
+        "LoveRevo.EXE"
+      ]
+    },
+    {
+      "name": "Puchipuchi Idol Kouhosei",
+      "originalTitle": "ぷちぷちアイドル候補生 ～早くシてよ！マネージャーでしょ～",
+      "version": 2490,
+      "executables": [
+        "PETITxPETIT.exe"
+      ]
+    },
+    {
+      "name": "Pure Love!",
+      "originalTitle": "ぴゅあらっ！",
+      "version": 2470,
+      "executables": [
+        "PURELOVE.EXE"
+      ]
+    },
+    {
+      "name": "Puri-Puri ~PRINCE×PRINCE~",
+      "originalTitle": "ぷり・プリ～PRINCE×PRINCE～",
+      "version": 2340,
+      "executables": [
+        "PRI.EXE"
+      ]
+    },
+    {
+      "name": "Raillore no Ryakudatsusha",
+      "originalTitle": "レイルロアの略奪者",
+      "version": 2500,
+      "executables": [
+        "RAILLORE_DL.EXE"
+      ]
+    },
+    {
+      "name": "Ran→Sem",
+      "originalTitle": "RAN→SEM～白濁デルモ妻のミイラ捕り～",
+      "version": 2470,
+      "executables": [
+        "RANDL.exe",
+        "RANDL_.exe"
+      ]
+    },
+    {
+      "name": "Re: Rem Plus",
+      "originalTitle": "Re:レムプラス",
+      "version": 2500,
+      "executables": [
+        "REMPLUS.exe"
+      ]
+    },
+    {
+      "name": "Reizoku ~Kyonyuu Shimai Choukyou Jugyou~",
+      "originalTitle": "隷属 ～巨乳姉妹調教授業～",
+      "version": 2400,
+      "executables": [
+        "RZK.exe"
+      ]
+    },
+    {
+      "name": "Ren'ai Saimin ~Tsun na Kanojo ga dereru Saimin~",
+      "originalTitle": "恋愛催眠～ツンな彼女がデレる催眠～",
+      "version": 2470,
+      "executables": [
+        "RENSAI.exe"
+      ]
+    },
+    {
+      "name": "Rikka Plus",
+      "originalTitle": "六花プラス",
+      "version": 2500,
+      "executables": [
+        "RIKKAPLUS.EXE"
+      ]
+    },
+    {
+      "name": "Rin x Sen",
+      "originalTitle": "RIN×SEN～白濁女教師と野郎ども～",
+      "version": 2470,
+      "executables": [
+        "RINxSEN.exe"
+      ]
+    },
+    {
+      "name": "Ryoumaden ~Houkago no Rakuen~",
+      "originalTitle": "凌魔伝 ～放課後の楽園～",
+      "version": 2470,
+      "executables": [
+        "RYOMADEN.exe"
+      ]
+    },
+    {
+      "name": "S.D.I.-Sadistic Daughter Incident-",
+      "originalTitle": "S.D.I.-Sadistic Daughter Incident- ～ムスメに童貞を奪われるボク～",
+      "version": 2490,
+      "executables": [
+        "SDI.EXE"
+      ]
+    },
+    {
+      "name": "Sabae no Ou",
+      "originalTitle": "蠅声の王",
+      "version": 2360,
+      "executables": [
+        "SABAE.EXE"
+      ]
+    },
+    {
+      "name": "Sadistic Little",
+      "originalTitle": "サディスティックりとる",
+      "version": 2470,
+      "executables": [
+        "SLITTLE.EXE"
+      ]
+    },
+    {
+      "name": "Saimin Paradise!",
+      "originalTitle": "催眠ぱらだいす! ～催眠術でツゴウノイイ美少女学園性活～",
+      "version": 2500,
+      "executables": [
+        "SAIPARA.exe"
+      ]
+    },
+    {
+      "name": "Saimin Seikatsu",
+      "originalTitle": "催眠生活 ～校則だから仕方ない！？～",
+      "version": 2470,
+      "executables": [
+        "SAIMIN.exe"
+      ]
+    },
+    {
+      "name": "Saint ~Aa Shu yo",
+      "originalTitle": "セイント ～あぁ主よ、教え子達に堕とされた私をお許し下さい～",
+      "version": 2470,
+      "executables": [
+        "SAINT.exe"
+      ]
+    },
+    {
+      "name": "School Saimin Paradise!",
+      "originalTitle": "スク～ル催眠ぱらだいす！",
+      "version": 2500,
+      "executables": [
+        "SUKUPARA.EXE"
+      ]
+    },
+    {
+      "name": "Sena Plus",
+      "originalTitle": "星奈プラス",
+      "version": 2500,
+      "executables": [
+        "SENAPLUS.EXE"
+      ]
+    },
+    {
+      "name": "Sensei! Shite Ageru",
+      "originalTitle": "先生っ！ シてあげる",
+      "version": 2480,
+      "executables": [
+        "SHITEAGE.exe"
+      ]
+    },
+    {
+      "name": "Shi-Ka-E-Shi",
+      "originalTitle": "シ・カ・エ・シ",
+      "version": 2150,
+      "executables": [
+        "FKS.EXE"
+      ]
+    },
+    {
+      "name": "Shinigami no Testament",
+      "originalTitle": "死神のテスタメント ～menuet of epistula～",
+      "version": 2490,
+      "executables": [
+        "TESTAMENT.exe"
+      ]
+    },
+    {
+      "name": "Shinseki no Oba-san",
+      "originalTitle": "親戚の小母さん ～離れの熟女、本家の後妻～",
+      "version": 2360,
+      "executables": [
+        "OBA.EXE"
+      ]
+    },
+    {
+      "name": "Shojo Mama",
+      "originalTitle": "処女ママ",
+      "version": 2490,
+      "executables": [
+        "SHOJOMAMA.EXE"
+      ]
+    },
+    {
+      "name": "Shokuinshitsu",
+      "originalTitle": "職員室",
+      "version": 2460,
+      "executables": [
+        "TEACH.exe"
+      ]
+    },
+    {
+      "name": "Shuukatsu Katei Kyoushi",
+      "originalTitle": "シュウカツ家庭教師",
+      "version": 2500,
+      "executables": [
+        "SYUKATSU_PKG.EXE"
+      ]
+    },
+    {
+      "name": "Signalist Stars!!",
+      "originalTitle": "しぐなリストスタ～ズ!!",
+      "version": 2500,
+      "executables": [
+        "SIGSTA.exe",
+        "SIGSTA_ZERO.exe"
+      ]
+    },
+    {
+      "name": "Sis Camp",
+      "originalTitle": "シス△キャン",
+      "version": 2500,
+      "executables": [
+        "SISCAMP_DDL.EXE"
+      ]
+    },
+    {
+      "name": "Sis☆Pon ~Haramase♪ Gochisou-sama!~",
+      "originalTitle": "シス☆ぽん～孕ませ♪ご馳走さまっ！～",
+      "version": 2400,
+      "executables": [
+        "SISPON.EXE"
+      ]
+    },
+    {
+      "name": "Son of a ☆ Bitch",
+      "originalTitle": "サノバ☆ビッチ ～早乙女野薔薇ちゃん、マジ天使!～",
+      "version": 2490,
+      "executables": [
+        "BITCH.EXE"
+      ]
+    },
+    {
+      "name": "Sorcery Jokers",
+      "originalTitle": "ソーサリージョーカーズ",
+      "version": 2500,
+      "executables": [
+        "SJS.exe"
+      ]
+    },
+    {
+      "name": "Sorcery Jokers [English]",
+      "originalTitle": "Sorcery Jokers [English]",
+      "version": 2500,
+      "executables": [
+        "SJSE.exe"
+      ]
+    },
+    {
+      "name": "STAGE",
+      "originalTitle": "STAGE",
+      "version": 2200,
+      "executables": []
+    },
+    {
+      "name": "Stellula Eques Codex",
+      "originalTitle": "ステルラエクエス コーデックス ～黄昏の姫騎士～",
+      "version": 2460,
+      "executables": [
+        "STCODE.exe"
+      ]
+    },
+    {
+      "name": "Stellula Eques ~Shokuzai no Himekishi~",
+      "originalTitle": "ステルラエクエス～贖罪の姫騎士～",
+      "version": 2420,
+      "executables": [
+        "STELLULA.EXE"
+      ]
+    },
+    {
+      "name": "Tanetsuke Mura",
+      "originalTitle": "種憑け村 ～白濁神、念仏講ノ儀～",
+      "version": 2480,
+      "executables": [
+        "tane.exe"
+      ]
+    },
+    {
+      "name": "Tekoire Princess! ~Boku ga Mienai Kimi no Tame~",
+      "originalTitle": "てこいれぷりんせす！～僕が見えない君のため～",
+      "version": 2370,
+      "executables": [
+        "TEKOIRE.EXE"
+      ]
+    },
+    {
+      "name": "Tenki Ane",
+      "originalTitle": "天気姉",
+      "version": 2470,
+      "executables": [
+        "TENKIANE.exe"
+      ]
+    },
+    {
+      "name": "Tentacle Busters",
+      "originalTitle": "テンタクル☆バスターズ 対未確認生命体交渉係り",
+      "version": 2380,
+      "executables": [
+        "TENTACLE.EXE"
+      ]
+    },
+    {
+      "name": "The Pillagers of Raillore",
+      "originalTitle": "The Pillagers of Raillore",
+      "version": 2500,
+      "executables": [
+        "RAILLOREe.exe"
+      ]
+    },
+    {
+      "name": "Tojita Sekai no Tori Colony",
+      "originalTitle": "閉じたセカイのトリコロニー",
+      "version": 2490,
+      "executables": [
+        "TRC.EXE"
+      ]
+    },
+    {
+      "name": "Toriko no Chigiri",
+      "originalTitle": "虜ノ契 ～家族のために身体を差し出す姉と妹～",
+      "version": 2490,
+      "executables": [
+        "TORIGIRI.exe"
+      ]
+    },
+    {
+      "name": "Tsugou no Ii Idol",
+      "originalTitle": "ツゴウノイイアイドル",
+      "version": 2500,
+      "executables": [
+        "TSUGOI.EXE"
+      ]
+    },
+    {
+      "name": "Tsui☆Teru",
+      "originalTitle": "ツイ☆てる",
+      "version": 2400,
+      "executables": [
+        "TUITE.EXE"
+      ]
+    },
+    {
+      "name": "Tsukutori",
+      "originalTitle": "つくとり",
+      "version": 2370,
+      "executables": [
+        "TUKU.EXE"
+      ]
+    },
+    {
+      "name": "Tsuyoimo x Yowaimo",
+      "originalTitle": "強妹×弱妹",
+      "version": 2450,
+      "executables": [
+        "IMOIMO.exe"
+      ]
+    },
+    {
+      "name": "Vanquish",
+      "originalTitle": "Vanquish",
+      "version": 2330,
+      "executables": [
+        "VANQ.EXE"
+      ]
+    },
+    {
+      "name": "Vestige -Yaiba ni Nokoru wa Kimi no Omokage-",
+      "originalTitle": "Vestige ―刃に残るは君の面影―",
+      "version": 2470,
+      "executables": [
+        "VESTIGE.exe"
+      ]
+    },
+    {
+      "name": "Wana II ~Gang Rape~",
+      "originalTitle": "輪罠II ～Gang Rape～",
+      "version": 2440,
+      "executables": [
+        "WANA_2.exe"
+      ]
+    },
+    {
+      "name": "Wana ~Hakudaku Mamire no Houkago~",
+      "originalTitle": "輪罠 ～白濁まみれの放課後～",
+      "version": 2360,
+      "executables": [
+        "wana.EXE"
+      ]
+    },
+    {
+      "name": "Yakata Jukujo ~The Immoral Residence~",
+      "originalTitle": "館熟女 ～The immoral residence～",
+      "version": 2370,
+      "executables": [
+        "YAKATA.EXE"
+      ]
+    },
+    {
+      "name": "Yokorenbo ~Immoral Mother~",
+      "originalTitle": "横恋母 ～Immoral Mother～",
+      "version": 2440,
+      "executables": [
+        "YOKOREN.EXE"
+      ]
+    },
+    {
+      "name": "You~Gaku",
+      "originalTitle": "よう∽ガク",
+      "version": 2470,
+      "executables": [
+        "YOUGAKU.EXE"
+      ]
+    },
+    {
+      "name": "Yoyogi Hitozuma Senmon Gakuin ~Nyuuzuma-tachi no Ennui~",
+      "originalTitle": "代々木人妻専門学院～乳妻たちのアンニュイ～",
+      "version": 2370,
+      "executables": [
+        "YODUMA.EXE"
+      ]
+    },
+    {
+      "name": "Yume Miru Egoist",
+      "originalTitle": "夢みるエゴイスト",
+      "version": 2470,
+      "executables": [
+        "EGOIST.exe"
+      ]
+    },
+    {
+      "name": "Yuru Plus",
+      "originalTitle": "ゆるプラス",
+      "version": 2490,
+      "executables": [
+        "YURUPLUS.exe"
+      ]
+    },
+    {
+      "name": "Zansho Omimai Moushiagemasu",
+      "originalTitle": "残暑お見舞い申し上げます。",
+      "version": 2410,
+      "executables": [
+        "ZANSHO.EXE"
+      ]
+    },
+    {
+      "name": "Zettai Zetsumei Shoujo",
+      "originalTitle": "絶体絶命少女",
+      "version": 2490,
+      "executables": [
+        "ZZS.exe"
+      ]
+    }
+  ],
+  "gameMap": {
+    "advlove.exe": "Hachigatsu no Nostalgia ~The Summer with You~",
+    "aneiro.exe": "Aneiro",
+    "aoj.exe": "Ao no Juuai",
+    "ayakasi.exe": "Ayakashibito",
+    "azuplus.exe": "Azu Plus",
+    "bbb.exe": "Baby, BE -Bedside Emotion-",
+    "binbo.exe": "Hin wa Bokura no Fuku no Kami",
+    "bitch.exe": "Son of a ☆ Bitch",
+    "bitches.exe": "Bitch Nee-chan ga Seijun na Hazu ga Nai!",
+    "bitches2.exe": "Bitch Shimai ga Seijun na Hazu ga Nai!!",
+    "bitches3.exe": "Bitch Gakuen ga Seijun na Hazu ga Nai!!?",
+    "br.exe": "Bloody Rondo",
+    "canfes.exe": "Can Fes! ~Itazura Majo to Naisho no Gakuensai~",
+    "cch.exe": "CC Hospital",
+    "chikan2.exe": "Chikan Circle 2",
+    "chikan2_.exe": "Chikan Circle 2",
+    "chikan3.exe": "Chikan Circle 3",
+    "chikan3_.exe": "Chikan Circle 3",
+    "chippana.exe": "Chiccha na Hanayome ~Mada Mada Tsubomi da mon~",
+    "chosaimin.exe": "Chou Saiminjutsu Gakuen",
+    "chu2hime.exe": "Chuuni Hime no Teikoku",
+    "chuchu.exe": "Chuuchuu Nurse",
+    "class.exe": "Classmate no Okaa-san",
+    "cleavage.exe": "Cleavage",
+    "ctrap.exe": "Chain Trap ~Fukushuu no Midara Wana~",
+    "damamuko.exe": "Damatte Watashi no Muko ni Nare!",
+    "danchidl.exe": "Danchi Wife ~Hitozuma Nude Model no Kenshin~",
+    "danchidl_.exe": "Danchi Wife ~Hitozuma Nude Model no Kenshin~",
+    "death.exe": "Death☆Meta",
+    "deco.exe": "Nagagutsu wo Haita Deco",
+    "dodakure.exe": "Doushite Daite Kurenai no!?",
+    "dou.exe": "Douryou no Oku-san ~Netori Tsuma, Netorare Tsuma~",
+    "dra.exe": "Draculius",
+    "eden4.exe": "EDEN IV",
+    "eden5.exe": "EDEN V",
+    "edenf.exe": "EDEN ~FINAL~",
+    "egoist.exe": "Yume Miru Egoist",
+    "engage.exe": "Engage Links",
+    "ero_on.exe": "ERO-ON",
+    "fks.exe": "Shi-Ka-E-Shi",
+    "gakuobam.exe": "Gakushoku no Oba-san The Motion",
+    "ghnurse.exe": "Gohoushi Nurse ~Mayonaka no Kyousei Call~",
+    "gpets.exe": "Gakuen Pets ~Houkago no Shiikusha~",
+    "gpets2.exe": "Gakuen Pets 2 ~Pool Side no Shiiku Katsudou~",
+    "gpets3.exe": "Gakuen Pets 3 ~Seieki Mamire no Toshokan~",
+    "gyakukate.exe": "Gyaku Katei Kyoushi",
+    "hanaoto.exe": "Hana to Otome ni Shukufuku o",
+    "hanarb.exe": "Hana to Otome ni Shukufuku o Royal Bouquet",
+    "hdol.exe": "Hitozuma OL -Chijoku no Gyoumu Meirei-",
+    "helter.exe": "Helter Skelter",
+    "hitoduma.exe": "Hitozuma Onna Kyoushi Reika",
+    "hitoz.exe": "Hitozuma Gui ~Manbiki G-man Chijoku Nikki~",
+    "hk123.exe": "Hana no Kioku 1-2-3",
+    "hk456.exe": "Hana no Kioku 4-5-6",
+    "hk7.exe": "Hana no Kioku 7",
+    "homuplus.exe": "Homu Plus",
+    "hou_nc.exe": "Houkago no Hoken'i ~Ane Juujoku~",
+    "id.exe": "Itsuka, Dokoka de ~Ano Amaoto no Kioku~",
+    "idea.exe": "Gensou no Idea ~Oratorio Phantasm Historia~",
+    "imoimo.exe": "Tsuyoimo x Yowaimo",
+    "imosmile.exe": "Imouto Smile",
+    "intruder.exe": "Intruder",
+    "isex.exe": "Idol Koukai Chijoku Sex",
+    "iyashim.exe": "Iyashinbo The Motion",
+    "jukubo.exe": "Jukubo Gui ~Moto Guradoru no Okaa-san~",
+    "katei.exe": "Kateinai Choukyou",
+    "kikimimi.exe": "Kiki Mimi",
+    "kinpatsu.exe": "Kinpatsu Tarou Monogatari",
+    "kuronekoplus.exe": "Kuroneko Plus",
+    "kurukuru.exe": "Cruise☆Cruise ~Shoujo no 10nen to Chiisana Yakusoku~",
+    "libra.exe": "Kyuuketsuki no Libra",
+    "libraes.exe": "Libra of the Vampire Princess",
+    "libraese.exe": "Libra of the Vampire Princess: The Promise PLUS Homeworld",
+    "lovecha.exe": "Lovecha ~Tsumasakidachi de, Hitomi o Tojite~",
+    "lovepiss.exe": "Love & Piss",
+    "loverevo.exe": "Otometeki Koi Kakumei★Love Revo!!",
+    "mahost.exe": "Mahou Shoujo no Taisetsu na Koto",
+    "majikan01.exe": "Majime to Sasayakareru Ore o Osananajimi no Risa",
+    "majikan02.exe": "Majime to Sasayakareru Ore o Jimi Kyonyuu no Nazuna",
+    "makifes.exe": "Maki Fes!",
+    "mama.exe": "Gibo to Oba ~Soshite Yuujin no Haha~",
+    "matntr.exe": "Boku Igai no Otoko o Shiranai Kanojo",
+    "mcd2.exe": "Manin Chijo Densha 2",
+    "mega.exe": "Megane Choukyou ~Megane Shoujo wa Ikan ni Shite Kimoota Kyoushi no Mono ni Natta ka~",
+    "metro.exe": "Metro Chikansen  ~Kairaku Jousha Annai~",
+    "mikods.exe": "Nakadashi Trilogy",
+    "mikoko.exe": "Mikoko",
+    "mimisuma.exe": "Mimi o Sumaseba",
+    "monomono.exe": "Kanojo ga Ore ni Kureta Mono",
+    "nazimi~.exe": "Najimi no Oba-chan",
+    "niizuma.exe": "Niizuma to Yuukaihan",
+    "niwaka.exe": "Niwaka Ane",
+    "nukitashi.exe": "Nukige Mitai na Shima ni Sunderu",
+    "nukitashi2.exe": "Nukige Mitai na Shima ni Sunderu... 2",
+    "nukitashi_trial.exe": "Nukige Mitai na Shima ni Sunderu [Trial]",
+    "nukitashi_trial2.exe": "Nukige Mitai na Shima ni Sunderu [Trial]",
+    "nyaruplus.exe": "Nyaru Plus",
+    "oba.exe": "Shinseki no Oba-san",
+    "one.exe": "ONE☆BOKU Faraway so close!",
+    "onegan.exe": "Onegan!",
+    "onikuru.exe": "Oni ga Kuru",
+    "oonapet.exe": "Onedari Onapet",
+    "oreimoplus.exe": "Oreimo Plus",
+    "oshian.exe": "Oshikake! Entremets",
+    "otome.exe": "Otome Juurin Yuugi",
+    "owd.exe": "Kanawanu Koi no Monogatari",
+    "petitxpetit.exe": "Puchipuchi Idol Kouhosei",
+    "pri.exe": "Puri-Puri ~PRINCE×PRINCE~",
+    "purelove.exe": "Pure Love!",
+    "raillore_dl.exe": "Raillore no Ryakudatsusha",
+    "railloree.exe": "The Pillagers of Raillore",
+    "randl.exe": "Ran→Sem",
+    "randl_.exe": "Ran→Sem",
+    "remplus.exe": "Re: Rem Plus",
+    "rensai.exe": "Ren'ai Saimin ~Tsun na Kanojo ga dereru Saimin~",
+    "rikkaplus.exe": "Rikka Plus",
+    "rinxsen.exe": "Rin x Sen",
+    "rk01.exe": "Omocha no Sensei Nawa Midori",
+    "rk01_d.war": "Omocha no Sensei Nawa Midori",
+    "rk01_s.war": "Omocha no Sensei Nawa Midori",
+    "ryomaden.exe": "Ryoumaden ~Houkago no Rakuen~",
+    "rzk.exe": "Reizoku ~Kyonyuu Shimai Choukyou Jugyou~",
+    "sabae.exe": "Sabae no Ou",
+    "saimin.exe": "Saimin Seikatsu",
+    "saint.exe": "Saint ~Aa Shu yo",
+    "saipara.exe": "Saimin Paradise!",
+    "sdi.exe": "S.D.I.-Sadistic Daughter Incident-",
+    "senaplus.exe": "Sena Plus",
+    "shiteage.exe": "Sensei! Shite Ageru",
+    "shojomama.exe": "Shojo Mama",
+    "sigsta.exe": "Signalist Stars!!",
+    "sigsta_zero.exe": "Signalist Stars!!",
+    "siscamp_ddl.exe": "Sis Camp",
+    "sispon.exe": "Sis☆Pon ~Haramase♪ Gochisou-sama!~",
+    "sitesite.exe": "Dokodemo Sukishite Itsudemo Sukishite",
+    "sjs.exe": "Sorcery Jokers",
+    "sjse.exe": "Sorcery Jokers [English]",
+    "slittle.exe": "Sadistic Little",
+    "spn1.exe": "Mahou no Shippo na Dai Ichi wa",
+    "spn3.exe": "Mahou no Shippo na Dai San wa",
+    "stcode.exe": "Stellula Eques Codex",
+    "stellula.exe": "Stellula Eques ~Shokuzai no Himekishi~",
+    "suiei.exe": "Kichiku Nakadashi Suieibu",
+    "sukupara.exe": "School Saimin Paradise!",
+    "syukatsu_pkg.exe": "Shuukatsu Katei Kyoushi",
+    "tane.exe": "Tanetsuke Mura",
+    "teach.exe": "Shokuinshitsu",
+    "tekoire.exe": "Tekoire Princess! ~Boku ga Mienai Kimi no Tame~",
+    "tenkiane.exe": "Tenki Ane",
+    "tentacle.exe": "Tentacle Busters",
+    "testament.exe": "Shinigami no Testament",
+    "tibaku.exe": "Otome Chibaku Yuugi",
+    "tikan1.exe": "Chikan Circle",
+    "tikan1~.exe": "Chikan Circle",
+    "torigiri.exe": "Toriko no Chigiri",
+    "train2.exe": "Chikan Densha Otoko 2",
+    "traing.exe": "Chikan Densha Otoko Gaiden",
+    "trc.exe": "Tojita Sekai no Tori Colony",
+    "tsugoi.exe": "Tsugou no Ii Idol",
+    "tuite.exe": "Tsui☆Teru",
+    "tuku.exe": "Tsukutori",
+    "vanq.exe": "Vanquish",
+    "vestige.exe": "Vestige -Yaiba ni Nokoru wa Kimi no Omokage-",
+    "waltz.exe": "Last Waltz ~Hakudaku Mamire no Natsu Gasshuku~",
+    "wana.exe": "Wana ~Hakudaku Mamire no Houkago~",
+    "wana_2.exe": "Wana II ~Gang Rape~",
+    "yakata.exe": "Yakata Jukujo ~The Immoral Residence~",
+    "yoduma.exe": "Yoyogi Hitozuma Senmon Gakuin ~Nyuuzuma-tachi no Ennui~",
+    "yokoren.exe": "Yokorenbo ~Immoral Mother~",
+    "yougaku.exe": "You~Gaku",
+    "yuruplus.exe": "Yuru Plus",
+    "zansho.exe": "Zansho Omimai Moushiagemasu",
+    "zzs.exe": "Zettai Zetsumei Shoujo"
+  }
+}

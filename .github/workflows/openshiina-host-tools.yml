@@ -1,0 +1,45 @@
+name: OpenShiina Host Tools CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-tools-and-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出宿主仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 Python 与 .NET 10 SDK
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: 运行 Python 工具链单元测试与 Manifest 静态校验
+        run: |
+          python3 tools/openshiina/check-host-manifest.py
+          python3 tools/openshiina/test-host-manifest.py
+          python3 tools/openshiina/test-upstream-integrity.py
+          python3 tools/openshiina/test-export-catalog.py
+          python3 tools/openshiina/test-sync-upstream.py
+
+      - name: 运行 C# 契约与目录单元测试
+        run: |
+          dotnet test engine/openshiina/host-apk/Tyranor.OpenShiina.Host.Tests/Tyranor.OpenShiina.Host.Tests.csproj -c Release
+
+      - name: 校验锁定上游提交、补丁应用与游戏目录一致性
+        run: |
+          REPO_URL=$(jq -r '.upstream.repo' engine/openshiina/source-lock.json)
+          COMMIT_SHA=$(jq -r '.upstream.commit' engine/openshiina/source-lock.json)
+          git -c core.autocrlf=false clone "$REPO_URL" "${{ runner.temp }}/openshiina-src"
+          git -C "${{ runner.temp }}/openshiina-src" checkout --detach "$COMMIT_SHA"
+          python3 tools/openshiina/verify-upstream.py --source "${{ runner.temp }}/openshiina-src"
+          python3 tools/openshiina/apply-patches.py --source "${{ runner.temp }}/openshiina-src"
+          python3 tools/openshiina/verify-upstream.py --source "${{ runner.temp }}/openshiina-src" --patched
+          python3 tools/openshiina/export-catalog.py --source "${{ runner.temp }}/openshiina-src" --check

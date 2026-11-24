@@ -1,0 +1,103 @@
+name: Build OpenShiina Host APK
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      use_dev_signing:
+        description: "使用临时调试密钥签名（仅测试构建）"
+        required: false
+        default: "true"
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出宿主仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 JDK 17、Python 与 .NET 10 SDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: 安装 Android 工作负载与构建工具
+        run: |
+          dotnet workload install android
+          yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
+          yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0" || true
+
+      - name: 运行全部工具与契约单测
+        run: |
+          python3 tools/openshiina/test-host-manifest.py
+          python3 tools/openshiina/test-upstream-integrity.py
+          python3 tools/openshiina/test-export-catalog.py
+          python3 tools/openshiina/test-sync-upstream.py
+          dotnet test engine/openshiina/host-apk/Tyranor.OpenShiina.Host.Tests/Tyranor.OpenShiina.Host.Tests.csproj -c Release
+
+      - name: 检出锁定 OpenShiina 上游提交
+        run: |
+          REPO_URL=$(jq -r '.upstream.repo' engine/openshiina/source-lock.json)
+          COMMIT_SHA=$(jq -r '.upstream.commit' engine/openshiina/source-lock.json)
+          git -c core.autocrlf=false clone "$REPO_URL" "${{ runner.temp }}/openshiina-src"
+          git -C "${{ runner.temp }}/openshiina-src" checkout --detach "$COMMIT_SHA"
+
+      - name: 构建并校验外置宿主 APK
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          USE_DEV_SIGNING: ${{ inputs.use_dev_signing }}
+        run: |
+          mkdir -p "${{ runner.temp }}/dist"
+          OUT_APK="${{ runner.temp }}/dist/Tyranor-Next-ShiinaRio.apk"
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
+            KS_PATH="${{ runner.temp }}/release.keystore"
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$KS_PATH"
+            python3 tools/openshiina/build-apk.py \
+              --source "${{ runner.temp }}/openshiina-src" \
+              --build-root "${{ runner.temp }}/openshiina-build" \
+              --keystore "$KS_PATH" \
+              --output-apk "$OUT_APK"
+          elif [ "$USE_DEV_SIGNING" = "true" ] && [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python3 tools/openshiina/build-apk.py \
+              --dev \
+              --source "${{ runner.temp }}/openshiina-src" \
+              --build-root "${{ runner.temp }}/openshiina-build" \
+              --output-apk "$OUT_APK"
+          else
+            echo "缺少 Release 签名 Secrets，拒绝产出未签名发布包" >&2
+            exit 1
+          fi
+          sha256sum "$OUT_APK" > "${{ runner.temp }}/dist/SHA256SUMS.txt"
+          cp LICENSE NOTICE.md "${{ runner.temp }}/dist/"
+          cp "${{ runner.temp }}/openshiina-src/LICENSE" "${{ runner.temp }}/dist/UPSTREAM-LICENSE"
+          cp "${{ runner.temp }}/openshiina-src/THIRD-PARTY-NOTICES.md" "${{ runner.temp }}/dist/UPSTREAM-THIRD-PARTY-NOTICES.md"
+
+      - name: 上传构建产物与许可证清单
+        uses: actions/upload-artifact@v4
+        with:
+          name: tyranor-next-shiinario-apk
+          path: ${{ runner.temp }}/dist/*
+
+      - name: 发布 GitHub Release（标签触发）
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Tyranor Next ShiinaRio ${{ github.ref_name }}"
+          files: ${{ runner.temp }}/dist/*
+          generate_release_notes: true

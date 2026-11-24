@@ -1,0 +1,77 @@
+name: Sync OpenShiina Upstream
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+    inputs:
+      target_commit:
+        description: "可选：同步到指定的 OpenShiina 提交（留空表示 master 最新）"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出宿主仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 Python 与 .NET 10 SDK
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: 执行上游同步并刷新游戏目录
+        id: sync
+        run: |
+          ARGS=(--source "${{ runner.temp }}/openshiina-src" --github-output "$GITHUB_OUTPUT")
+          if [ -n "${{ inputs.target_commit }}" ]; then
+            ARGS+=(--target-commit "${{ inputs.target_commit }}")
+          fi
+          python3 tools/openshiina/sync-upstream.py "${ARGS[@]}"
+
+      - name: 若发生变更则重跑全套单测
+        if: steps.sync.outputs.changed == 'true'
+        run: |
+          python3 tools/openshiina/check-host-manifest.py
+          python3 tools/openshiina/test-host-manifest.py
+          python3 tools/openshiina/test-upstream-integrity.py
+          python3 tools/openshiina/test-export-catalog.py
+          python3 tools/openshiina/test-sync-upstream.py
+          dotnet test engine/openshiina/host-apk/Tyranor.OpenShiina.Host.Tests/Tyranor.OpenShiina.Host.Tests.csproj -c Release
+
+      - name: 提交并创建或更新上游同步 PR
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="sync/openshiina-${{ steps.sync.outputs.new_commit }}"
+          BRANCH="${BRANCH:0:32}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add engine/openshiina/source-lock.json engine/openshiina/games.json
+          git commit -m "chore: 同步 OpenShiina 上游至 ${{ steps.sync.outputs.new_tag || steps.sync.outputs.new_commit }}"
+          git push -f origin "$BRANCH"
+          BODY="自动同步 \`kagaminehaku/OpenShiina\` 上游提交：
+          - 旧版本：\`${{ steps.sync.outputs.old_commit }}\` (${{ steps.sync.outputs.old_tag }})
+          - 新版本：\`${{ steps.sync.outputs.new_commit }}\` (${{ steps.sync.outputs.new_tag }})
+          - 目录统计：${{ steps.sync.outputs.scheme_count }} 个具名方案（Formats v${{ steps.sync.outputs.formats_version }}）"
+          if ! gh pr list --head "$BRANCH" --state open --json number -q '.[0].number' | grep -q .; then
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "chore: 同步 OpenShiina 上游（${{ steps.sync.outputs.new_tag }}）" \
+              --body "$BODY"
+          else
+            gh pr edit "$BRANCH" --body "$BODY"
+          fi

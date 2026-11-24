@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "engine": "openshiina",
+  "upstream": {
+    "repo": "https://github.com/kagaminehaku/OpenShiina.git",
+    "branch": "master",
+    "commit": "14a24de703fb77c743ea6e0328f8e69fa26f3127",
+    "tag": "v0.8.7",
+    "license": "GPL-3.0-or-later"
+  },
+  "patches": {
+    "dir": "engine/openshiina/patches",
+    "seriesFile": "engine/openshiina/patches/series",
+    "series": []
+  },
+  "host": {
+    "packageName": "com.tyranor.next.shiinario",
+    "launchActivity": "com.tyranor.next.shiinario.ShiinaRioLaunchActivity",
+    "runtimeActivity": "com.tyranor.next.shiinario.TyranorShiinaRioActivity",
+    "launchAction": "com.tyranor.next.action.LAUNCH_SHIINARIO",
+    "minSdk": 30,
+    "targetSdk": 36,
+    "versionCode": 1,
+    "versionName": "0.1.0",
+    "dotNetVersion": "10.0",
+    "project": "engine/openshiina/host-apk/Tyranor.OpenShiina.Host/Tyranor.OpenShiina.Host.csproj"
+  },
+  "catalog": {
+    "sourcePath": "src/OpenShiina.Core/Data/Formats.Json",
+    "outputPath": "engine/openshiina/games.json",
+    "assetPath": "assets/tyn/games.json"
+  }
+}

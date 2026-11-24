@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Tyranor.OpenShiina.Host/Tyranor.OpenShiina.Host.csproj" />
+  <Project Path="Tyranor.OpenShiina.Host.Tests/Tyranor.OpenShiina.Host.Tests.csproj" />
+</Solution>

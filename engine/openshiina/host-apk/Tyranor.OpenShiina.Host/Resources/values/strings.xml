@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Tyranor ShiinaRio 引擎组件</string>
+  <string name="err_title">无法启动 ShiinaRio 游戏</string>
+  <string name="err_invalid_request">启动参数无效或协议版本不受支持：%1$s</string>
+  <string name="err_storage_permission">请在系统设置中授予“所有文件访问权限”，以便读取外部游戏目录，授权后将自动继续启动。</string>
+  <string name="err_open_failed">OpenShiina 无法打开游戏目录：%1$s</string>
+  <string name="btn_grant_permission">前往授权</string>
+  <string name="btn_close">关闭</string>
+</resources>

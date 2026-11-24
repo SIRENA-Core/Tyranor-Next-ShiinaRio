@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Tyranor ShiinaRio Runtime</string>
+  <string name="err_title">Failed to launch ShiinaRio game</string>
+  <string name="err_invalid_request">Invalid launch arguments or unsupported protocol: %1$s</string>
+  <string name="err_storage_permission">Please grant "All files access" so the runtime can read external game directories.</string>
+  <string name="err_open_failed">OpenShiina failed to open the game directory: %1$s</string>
+  <string name="btn_grant_permission">Grant permission</string>
+  <string name="btn_close">Close</string>
+</resources>
