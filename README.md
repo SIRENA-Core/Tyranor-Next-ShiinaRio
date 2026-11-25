@@ -63,6 +63,7 @@ Tyranor-Next-ShiinaRio/
 
 - [`tools/openshiina/export-catalog.py`](tools/openshiina/export-catalog.py) 从上游 `Formats.Json` 提取 **165 个具名作品方案**与 **173 个文件入口映射**到 [`engine/openshiina/games.json`](engine/openshiina/games.json)，并主动排除 `ShiinaRio v2.34 and older`、`ShiinaRio v2.36-2.38` 两个通用兜底方案，避免静态扫描误匹配。
 - 构建过程会将 `games.json` 打包至 APK `assets/tyn/games.json`，并检验字节完全一致，供 `Tyranor-Next` 侧使用 `check-game-catalog.py` 对齐。
+- **自动识别并托管 EVB 汉化补丁**：启动游戏前自动探测目录顶层 Enigma Virtual Box（`.enigma1`）单文件汉化 EXE，在后台线程无损解包资产至 `<gameDir>/translation/` 并通过 `.tyranor-evb-overlay.json` 实现缓存复用与自动清理；若目录已存在用户手工翻译文件则保留不覆写。
 
 ## 本地构建与验证
 

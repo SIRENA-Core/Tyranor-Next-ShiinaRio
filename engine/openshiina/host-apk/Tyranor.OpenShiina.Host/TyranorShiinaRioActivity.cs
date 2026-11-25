@@ -36,7 +36,7 @@ namespace Tyranor.OpenShiina.Host;
         | ConfigChanges.Navigation
         | ConfigChanges.UiMode
         | ConfigChanges.Density,
-    Theme = "@android:style/Theme.NoTitleBar.Fullscreen"
+    Theme = "@style/TyranorShiinaRioTheme"
 )]
 public sealed class TyranorShiinaRioActivity : AvaloniaMainActivity
 {
@@ -160,6 +160,26 @@ public sealed class TyranorShiinaRioActivity : AvaloniaMainActivity
                 _gameView = view;
                 TyranorShiinaRioApp.RootHost.Content = view;
 
+                var syncSw = System.Diagnostics.Stopwatch.StartNew();
+                var syncResult = await Task.Run(
+                    () => ShiinaRioEvbTranslationSync.TrySyncSafe(launch.GameDir, launch.LaunchTarget)
+                );
+                syncSw.Stop();
+                if (syncResult.Status == EvbTranslationSyncStatus.Failed)
+                {
+                    Android.Util.Log.Warn(
+                        "TyranorShiinaRio",
+                        $"EVB 汉化同步失败（已降级继续原版启动）：exe={syncResult.SourceExeName ?? "<none>"}, elapsedMs={syncSw.ElapsedMilliseconds}, error={syncResult.Message}"
+                    );
+                }
+                else
+                {
+                    Android.Util.Log.Info(
+                        "TyranorShiinaRio",
+                        $"EVB 汉化同步完成：status={syncResult.Status}, exe={syncResult.SourceExeName ?? "<none>"}, files={syncResult.FileCount}, elapsedMs={syncSw.ElapsedMilliseconds}"
+                    );
+                }
+
                 EncryptionScheme? scheme = null;
                 if (!string.IsNullOrEmpty(launch.SchemeName))
                 {
@@ -177,14 +197,20 @@ public sealed class TyranorShiinaRioActivity : AvaloniaMainActivity
                 var error = await view.OpenAsync(launch.GameDir, scheme);
                 if (!string.IsNullOrEmpty(error))
                 {
-                    ShowRuntimeError(GetString(Resource.String.err_open_failed, [error]));
+                    ShowRuntimeError(FormatErrorMessage(Resource.String.err_open_failed, error));
                 }
             }
             catch (Exception ex)
             {
-                ShowRuntimeError(GetString(Resource.String.err_open_failed, [ex.Message]));
+                ShowRuntimeError(FormatErrorMessage(Resource.String.err_open_failed, ex.Message));
             }
         });
+    }
+
+    private string FormatErrorMessage(int resId, string? detail)
+    {
+        var arg = detail ?? "";
+        return GetString(resId, [new Java.Lang.String(arg)]) ?? arg;
     }
 
     private string EnsureFormatsExtracted()
@@ -278,7 +304,8 @@ public sealed class TyranorShiinaRioActivity : AvaloniaMainActivity
             DataRoot: dataRoot,
             Language: intent.GetStringExtra(ShiinaRioContract.InternalExtraLanguage) ?? "",
             Renderer: intent.GetStringExtra(ShiinaRioContract.InternalExtraRenderer) ?? "Gpu",
-            Theme: intent.GetStringExtra(ShiinaRioContract.InternalExtraTheme) ?? "Shiina"
+            Theme: intent.GetStringExtra(ShiinaRioContract.InternalExtraTheme) ?? "Shiina",
+            LaunchTarget: intent.GetStringExtra(ShiinaRioContract.InternalExtraLaunchTarget)
         );
     }
 
@@ -293,7 +320,8 @@ public sealed class TyranorShiinaRioActivity : AvaloniaMainActivity
         string DataRoot,
         string Language,
         string Renderer,
-        string Theme
+        string Theme,
+        string? LaunchTarget
     );
 
     private sealed class AndroidAudioTrackOutput : IDisposable

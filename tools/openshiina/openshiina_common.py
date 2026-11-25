@@ -18,6 +18,9 @@ GAMES_CATALOG_PATH = ENGINE_DIR / "games.json"
 HOST_MANIFEST_PATH = (
     ENGINE_DIR / "host-apk" / "Tyranor.OpenShiina.Host" / "Properties" / "AndroidManifest.xml"
 )
+HOST_STYLES_PATH = (
+    ENGINE_DIR / "host-apk" / "Tyranor.OpenShiina.Host" / "Resources" / "values" / "styles.xml"
+)
 HOST_CSPROJ_PATH = (
     ENGINE_DIR / "host-apk" / "Tyranor.OpenShiina.Host" / "Tyranor.OpenShiina.Host.csproj"
 )

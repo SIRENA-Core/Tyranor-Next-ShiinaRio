@@ -32,4 +32,5 @@ public static class ShiinaRioContract
     public const string InternalExtraRenderer = "com.tyranor.next.shiinario.internal.RENDERER";
     public const string InternalExtraTheme = "com.tyranor.next.shiinario.internal.THEME";
     public const string InternalExtraLanguage = "com.tyranor.next.shiinario.internal.LANGUAGE";
+    public const string InternalExtraLaunchTarget = "tyn.internal.launch_target";
 }

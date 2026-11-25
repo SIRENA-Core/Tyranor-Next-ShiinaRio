@@ -48,7 +48,7 @@ public sealed class ShiinaRioLaunchActivity : Activity
         }
         else if (_askedStoragePermission && _pendingRequest is not null)
         {
-            ShowErrorAndFinish(GetString(Resource.String.err_storage_permission));
+            ShowErrorAndFinish(GetString(Resource.String.err_storage_permission) ?? "");
         }
     }
 
@@ -56,7 +56,7 @@ public sealed class ShiinaRioLaunchActivity : Activity
     {
         if (intent is null || intent.Action != ShiinaRioContract.ActionLaunch)
         {
-            ShowErrorAndFinish(GetString(Resource.String.err_invalid_request, intent?.Action ?? "missing action"));
+            ShowErrorAndFinish(FormatErrorMessage(Resource.String.err_invalid_request, intent?.Action ?? "missing action"));
             return;
         }
 
@@ -67,7 +67,7 @@ public sealed class ShiinaRioLaunchActivity : Activity
         }
         catch (Exception ex)
         {
-            ShowErrorAndFinish(GetString(Resource.String.err_invalid_request, ex.Message));
+            ShowErrorAndFinish(FormatErrorMessage(Resource.String.err_invalid_request, ex.Message));
             return;
         }
 
@@ -85,7 +85,7 @@ public sealed class ShiinaRioLaunchActivity : Activity
 
         if (!ShiinaRioRequest.TryParse(raw, catalog, Directory.Exists, out var request, out var error) || request is null)
         {
-            ShowErrorAndFinish(GetString(Resource.String.err_invalid_request, error ?? "unknown"));
+            ShowErrorAndFinish(FormatErrorMessage(Resource.String.err_invalid_request, error ?? "unknown"));
             return;
         }
 
@@ -130,14 +130,21 @@ public sealed class ShiinaRioLaunchActivity : Activity
             launch.PutExtra(ShiinaRioContract.InternalExtraRenderer, request.Settings.Renderer);
             launch.PutExtra(ShiinaRioContract.InternalExtraTheme, request.Settings.Theme);
             launch.PutExtra(ShiinaRioContract.InternalExtraLocale, request.Locale ?? "");
+            launch.PutExtra(ShiinaRioContract.InternalExtraLaunchTarget, request.LaunchTarget ?? "");
 
             StartActivity(launch);
             Finish();
         }
         catch (Exception ex)
         {
-            ShowErrorAndFinish(GetString(Resource.String.err_open_failed, ex.Message));
+            ShowErrorAndFinish(FormatErrorMessage(Resource.String.err_open_failed, ex.Message));
         }
+    }
+
+    private string FormatErrorMessage(int resId, string? detail)
+    {
+        var arg = detail ?? "";
+        return GetString(resId, [new Java.Lang.String(arg)]) ?? arg;
     }
 
     private void ShowStoragePermissionPrompt()
