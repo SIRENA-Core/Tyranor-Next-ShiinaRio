@@ -20,8 +20,8 @@
     "launchAction": "com.tyranor.next.action.LAUNCH_SHIINARIO",
     "minSdk": 30,
     "targetSdk": 36,
-    "versionCode": 1,
-    "versionName": "0.1.0",
+    "versionCode": 2,
+    "versionName": "0.1.1",
     "dotNetVersion": "10.0",
     "project": "engine/openshiina/host-apk/Tyranor.OpenShiina.Host/Tyranor.OpenShiina.Host.csproj"
   },
